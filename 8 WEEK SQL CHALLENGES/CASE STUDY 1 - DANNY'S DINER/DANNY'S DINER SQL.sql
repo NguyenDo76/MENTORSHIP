@@ -3,15 +3,13 @@ select s.customer_id,
 	    sum (m.price) as total_price
 from sales s
 join menu m on m.product_id = s.product_id
-group by s.customer_id
-order by total_price DESC;
+group by s.customer_id;
 
 -- 2. How many days has each customer visited the restaurant?
 select s.customer_id,
         count (distinct s.order_date) as count_day
 From sales s
 group by s.customer_id
-order by s.customer_id asc
 
 -- 3. What was the first item from the menu purchased by each customer?
 with cte as (select s.customer_id, m.product_name,
@@ -30,7 +28,6 @@ select top (1) m.product_name,
 from sales s
 join menu m on s.product_id = m.product_id
 group by m.product_name
-order by count_product DESC
 
 -- 5. Which item was the most popular for each customer?
 with cte as (select customer_id, m.product_name,  COUNT(s.product_id) as count_product,
@@ -44,36 +41,61 @@ from cte
 where rank_product = 1
 
 -- 6. Which item was purchased first by the customer after they became a member?
-
+-- Method 1:
 with a as (select s.customer_id, s.product_id,
-                datediff (DY,mb.join_date,s.order_date) as count_date
+                datediff (DY,mb.join_date,s.order_date) as days_difference
             from sales s
             join members mb on mb.customer_id = s.customer_id),
 
-    b as (select customer_id, product_id,
-                row_number () over (partition by customer_id order by count_date asc) as 'rank'
+  b as (select customer_id, product_id,
+                row_number () over (partition by customer_id order by days_difference asc) as 'rank'
             from a
-            where count_date > 0)
+            where days_difference > 0)
 
 SELECT customer_id, b.product_id, product_name
 from b
 join menu m on b.product_id = m.product_id
 where rank = 1
 
+-- Method 2:
+with abc as (select s.customer_id, product_id,
+                row_number () over (partition by s.customer_id order by s.order_date asc) as 'rank'
+        from sales s
+        join members mb on mb.customer_id = s.customer_id
+        where mb.join_date < s.order_date)
+
+SELECT customer_id, abc.product_id, product_name
+from abc
+join menu m on abc.product_id = m.product_id
+where rank = 1
+
 -- 7. Which item was purchased just before the customer became a member?
+-- Method 1:
 with a as (select s.customer_id, s.product_id,
-                DATEDIFF(DY,mb.join_date,s.order_date) as count_date
+                DATEDIFF(DY,mb.join_date,s.order_date) as days_difference
             from sales s
             join members mb on mb.customer_id = s.customer_id),
 
     b as (select customer_id, product_id,
-                row_number () over (partition by customer_id order by count_date desc) as 'rank'
+                row_number () over (partition by customer_id order by days_difference desc) as 'rank'
             from a
-            where count_date < 0)
+            where days_difference < 0)
 
 SELECT customer_id, b.product_id, product_name
 from b
 join menu m on b.product_id = m.product_id
+where rank = 1
+
+-- Method 2:
+with abc as (select s.customer_id, product_id,
+                row_number () over (partition by s.customer_id order by s.order_date desc) as 'rank'
+        from sales s
+        join members mb on mb.customer_id = s.customer_id
+        where mb.join_date > s.order_date)
+
+SELECT customer_id, abc.product_id, product_name
+from abc
+join menu m on abc.product_id = m.product_id
 where rank = 1
 
 -- 8. What is the total items and amount spent for each member before they became a member?
@@ -97,11 +119,10 @@ from a
 group by customer_id
 
 -- 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
-
+--REF 1:
 with cte as (select s.customer_id,
-CASE WHEN DATEDIFF (DY,mb.join_date,s.order_date) BETWEEN 0 and 6 then price *10 * 2
-    WHEN DATEDIFF (DY,mb.join_date,s.order_date) < 0 and m.product_name = 'sushi' then m.price * 10 * 2 
-    WHEN DATEDIFF (DY,mb.join_date,s.order_date) >= 7 and m.product_name = 'sushi' then m.price * 10 * 2 
+CASE when m.product_name = 'sushi' then m.price * 10 * 2
+     when DATEDIFF (DY,mb.join_date,s.order_date) BETWEEN 0 and 6 then price *10 * 2
 else price *10
 end as total_points
 from sales s
@@ -113,7 +134,22 @@ select customer_id,
         sum (total_points) as total_point_by_customer_in_January
 from cte 
 group by customer_id
-order by customer_id
+
+--REF 2:
+with cte as (select s.customer_id,s.order_date,mb.join_date,
+CASE when m.product_name = 'sushi' then m.price * 10 * 2
+     when DATEDIFF (DY,mb.join_date,s.order_date) BETWEEN 0 and 6 then price *10 * 2
+else price *10
+end as total_points
+from sales s
+join menu m on m.product_id = s.product_id
+join members mb on mb.customer_id = s.customer_id
+where MONTH(s.order_date) = 1 and mb.join_date <= s.order_date)
+
+select customer_id, 
+        sum (total_points) as total_point_by_customer_in_January
+from cte
+group by customer_id
 
 --Bonus Questions
 -- Join All The Things
