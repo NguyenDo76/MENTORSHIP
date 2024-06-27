@@ -67,7 +67,7 @@ select cte.plan_id,p.plan_name,
        round(count (distinct customer_id) * 100.0/(select count (distinct customer_id) from foodie_fi.subscriptions),2) as percentage
 from cte
 join foodie_fi.plans p on p.plan_id = cte.plan_id
-where next_start_date is null or next_start_date > '2020-12-31' -- is null is don't know after plan and next date is next after plan
+where next_start_date is null or next_start_date > '2020-12-31'
 group by cte.plan_id,p.plan_name;
 
 --8.How many customers have upgraded to an annual plan in 2020?
