@@ -16,9 +16,6 @@ select week_date,
 into ##clean_weekly_sales
 from data_mart;
 
-select top (3) *
-from ##clean_weekly_sales
-
 --B.DATA EXPLORATION:
 -- 1.What day of the week is used for each week_date value?
 select distinct datename (weekday,week_date) as week_day
