@@ -17,25 +17,6 @@ select count (distinct txn_id) as count_unique_trans
 from [dbo].[balanced_tree.sales];
 
 -- 2.What is the average 'unique products' purchased in each transaction?
--- My question
-with cte_prod as (select txn_id,
-                         count (prod_id) as count_prod,
-                         sum (qty) as total_prod
-                  from [dbo].[balanced_tree.sales]
-                  group by txn_id)
-
-select 
-       sum (total_prod) / sum (count_prod) as avg_prod
-from cte_prod;
--- Mentor question
-with cte_prod as (select txn_id,
-                         sum (qty) as total_prod
-                  from [dbo].[balanced_tree.sales]
-                  group by txn_id)
-
-select avg (total_prod) as avg_prod
-from cte_prod;
--- Web question
 with cte_prod as (select txn_id,
                          count (prod_id) as count_prod
                   from [dbo].[balanced_tree.sales]
