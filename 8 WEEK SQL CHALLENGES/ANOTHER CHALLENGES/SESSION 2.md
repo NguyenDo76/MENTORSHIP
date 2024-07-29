@@ -2,10 +2,10 @@
 
 - [:bookmark_tabs: Entity Relationship Diagram](#bookmark_tabsEntity-Relationship-Diagram)
 - [:tshirt: Solution](#tshirtSolution)
-  - [Question 1](##-Question-1-:-Create-tables)
-  - [Question 2](##-Question-2-:-Organize-Runners-Into-Groups-:)
-  - [Question 3](##-Question-3-:-How-Many-Runners-Participate-in-Each-Event-:)
-  - [Question 4](##-Question-4-:-Group-Runners-by-Main-Distance-and-Age-:)
+  - [Question 1](##Question-1)
+  - [Question 2](##Question-2)
+  - [Question 3](##Question-3)
+  - [Question 4](##Question-4)
 ----
 
 # 📑 Entity Relationship Diagram
