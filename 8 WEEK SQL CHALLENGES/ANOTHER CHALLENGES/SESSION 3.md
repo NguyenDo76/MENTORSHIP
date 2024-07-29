@@ -2,14 +2,19 @@
 
 - [:bookmark_tabs: Entity Relationship Diagram](#bookmark_tabsEntity-Relationship-Diagram)
 - [:tshirt: Solution](#tshirtSolution)
-
+  - [Question 1](#Question1)
+  - [Question 2](#Question2)
+  - [Question 3](#Question3)
+  - [Question 4](#Question4)
 ----
 
 # 📑: Entity Relationship Diagram
 
 
 # :tshirt: Solution
-## Question 1: Create table
+
+<a name="question1"></a>
+## Question 1: Create tables
 
 ```tsql
 drop table if exists session_3_customers;
@@ -335,6 +340,7 @@ insert into session_3_channels values
 |1|online|
 |2|store|
 
+<a name="question2"></a>
 ## Question 2: List the Top 3 Most Expensive Orders
 
 ```tsql
@@ -349,6 +355,8 @@ order by (quantity * unit_price - quantity * discount) desc
 |15|3590.50|
 |25|3487.50|
 
+
+<a name="question3"></a>
 ## Question 3: Compute Deltas Between Consecutive Orders:
 In this exercise, we're going to compute the difference between two consecutive orders from the same customer. Show the ID of the order (order_id), the ID of the customer (customer_id), the total_amount of the order, the total_amount of the previous order based on the order_date (name the column previous_value), and the difference between the total_amount of the current order and the previous order (name the column delta).
 
@@ -409,6 +417,8 @@ join session_3_customers c on c.customer_id = o.customer_id
 |25|10|69|72|-3|
 |25|10|69|69|0|
 
+
+<a name="question4"></a>
 ## Question 4: Compute the Running Total of Purchases per Customer:
 For each customer and their orders, show the following:
  - customer_id: the ID of the customer.
