@@ -2,16 +2,18 @@
 
 - [:bookmark_tabs: Entity Relationship Diagram](#bookmark_tabsEntity-Relationship-Diagram)
 - [:tshirt: Solution](#tshirtSolution)
-  - [Question 1](#Question-1)
-  - [Question 2](#Question-2)
-  - [Question 3](#Question-3)
-  - [Question 4](#Question-4)
+  - [Question 1](#Question1)
+  - [Question 2](#Question2)
+  - [Question 3](#Question3)
+  - [Question 4](#Question4)
 ----
 
 # 📑 Entity Relationship Diagram
 
 
 # :tshirt: Solution
+
+<a name="question1"></a>
 ## Question 1: Create tables
 
 ```tsql
@@ -102,6 +104,8 @@ insert into session_2_runner_event values
 |1|2|
 |1|3|
 
+
+<a name="question2"></a>
 ## Question 2: Organize Runners Into Groups:
 Select the main distance and the number of runners that run the given distance (runners_number). Display only those rows where the number of runners is greater than 3.
 
@@ -118,6 +122,8 @@ having count (runner_id) > 3;
 |---|---|---|
 |1|10.00|4|
 
+
+<a name="question3"></a>
 ## Question 3: How Many Runners Participate in Each Event:
 Display the event name and the number of club members that take part in this event (call this column runner_count). Note that there may be events in which no club members participate. For these events, the runner_count should equal 0.
 
@@ -140,6 +146,8 @@ from cte_runner;
 |New Year Run|4|
 |Warsaw Runs|4|
 
+
+<a name="question4"></a>
 ## Question 4: Group Runners by Main Distance and Age:
 Display the distance and the number of runners there are for the following age categories: under 20, 20_29, 30_39, 40_49, and over 50. Use the following column aliases: under_20, age_20_29, age_30_39, age_40_49, and over_50.
 
