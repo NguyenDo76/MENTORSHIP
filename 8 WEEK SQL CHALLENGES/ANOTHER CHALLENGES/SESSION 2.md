@@ -1,7 +1,7 @@
 # 📖 SESSION 2
 
 - [:bookmark_tabs: Entity Relationship Diagram](#bookmark_tabsEntity-Relationship-Diagram)
-- [:tshirt: Solution](#tshirtSolution)
+- [:tada: Solution](#tshirtSolution)
   - [Question 1](#Question1)
   - [Question 2](#Question2)
   - [Question 3](#Question3)
@@ -11,7 +11,7 @@
 # 📑 Entity Relationship Diagram
 
 
-# :tshirt: Solution
+# :tada: Solution
 
 <a name="question1"></a>
 ## Question 1: Create tables
