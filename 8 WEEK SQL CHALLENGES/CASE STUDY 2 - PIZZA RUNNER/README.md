@@ -1,4 +1,4 @@
-# :tada: CASE STUDY #1 - DANNY'S DINER
+# :tada: CASE STUDY #2 - PIZZA RUNNER
 
 Find the full case study [**here**](https://8weeksqlchallenge.com/case-study-2/).
 
