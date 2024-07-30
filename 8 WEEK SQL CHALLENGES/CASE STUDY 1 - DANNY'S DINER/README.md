@@ -358,7 +358,7 @@ select s.customer_id, s.order_date, m.product_name, m.price,
        case when datediff (dy,mb.join_date,s.order_date) >= 0 then 'Y' else 'N' end as member
 from sales s
 left join menu m on m.product_id = s.product_id
-left join members mb on mb.customer_id = s.customer_id
+left join members mb on mb.customer_id = s.customer_id;
 ```
 
 |customer_id|order_date|product_name|price|member|
@@ -391,7 +391,7 @@ with cte_members as (select s.customer_id, s.order_date, m.product_name, m.price
 
 select *,
        case when member = 'Y' then dense_rank () over (partition by customer_id, member order by order_date asc) end as ranking
-from cte_members
+from cte_members;
 ```
 
 |customer_id|order_date|product_name|price|member|ranking|
