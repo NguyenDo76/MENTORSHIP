@@ -16,12 +16,17 @@ Find the full case study [**here**](https://8weeksqlchallenge.com/case-study-5/)
 <a name="introduction"></a>
 ## :question: Introduction
 
-Subscription based businesses are super popular and Danny realised that there was a large gap in the market - he wanted to create a new streaming service that only had food related content - something like Netflix but with only cooking shows!
+Data Mart is Danny’s latest venture and after running international operations for his online supermarket that specialises in fresh produce - Danny is asking for your support to analyse his sales performance.
 
-Danny finds a few smart friends to launch his new startup Foodie-Fi in 2020 and started selling monthly and annual subscriptions, giving their customers unlimited on-demand access to exclusive food videos from around the world!
+In June 2020 - large scale supply changes were made at Data Mart. All Data Mart products now use sustainable packaging methods in every single step from the farm all the way to the customer.
 
-Danny created Foodie-Fi with a data driven mindset and wanted to ensure all future investment decisions and new features were decided using data. This case study focuses on using subscription style digital data to answer important business questions.
+Danny needs your help to quantify the impact of this change on the sales performance for Data Mart and it’s separate business areas.
 
+The key business question he wants you to help him answer are the following:
+
+ - What was the quantifiable impact of the changes introduced in June 2020?
+ - Which platform, region, segment and customer types were the most impacted by this change?
+ - What can we do about future introduction of similar sustainability updates to the business to minimise impact on sales?
 ---
 
 <a name="entity"></a>
