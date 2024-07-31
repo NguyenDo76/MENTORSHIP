@@ -37,7 +37,7 @@ The key business question he wants you to help him answer are the following:
 <a name="example"></a>
 ## :open_book: Example Datasets
 
-**Table: Weekly_sales**
+**Table: weekly_sales**
 | week_date | region        | platform | segment | customer_type | transactions | sales      |
 | :-------- | :------------ | :------- | :------ | :------------ | :----------- | :--------- |
 | 9/9/20    | OCEANIA       | Shopify  | C3      | New           | 610          | 110033.89  |
@@ -104,7 +104,7 @@ select week_date,
        round (sales/transactions,2) as avg_transaction,
        sales
 into ##clean_weekly_sales
-from data_mart;
+from weekly_sales;
 ```
 ***New table: ##clean_weekly_sales***
 |week_date|week_number|month_number|calendar_year|region|platform|segment|age_band|demographic|customer_type|transactions|avg_transaction|sales|
