@@ -33,7 +33,7 @@ This case study is all about calculating metrics, growth and helping the busines
 <a name="example"></a>
 ## :open_book: Example Datasets
 
-**Table 1: Regions**
+**Table 1: regions**
 
 | region_id | region_name |
 | :-------- | :---------- |
@@ -43,7 +43,7 @@ This case study is all about calculating metrics, growth and helping the busines
 | 4         | Europe      |
 | 5         | Oceania     |
 
-**Table 2: Customer Nodes**
+**Table 2: customer_nodes**
 
 | customer_id | region_id | node_id | start_date | end_date   |
 | :---------- | :-------- | :------ | :--------- | :--------- |
@@ -58,7 +58,7 @@ This case study is all about calculating metrics, growth and helping the busines
 | 9           | 4         | 5       | 2020-01-21 | 2020-01-25 |
 | 10          | 3         | 4       | 2020-01-13 | 2020-01-14 |
 
-**Table 3: Customer Transactions**
+**Table 3: customer_transactions**
 
 | customer_id | txn_date   | txn_type | txn_amount |
 | :---------- | :--------- | :------- | :--------- |
