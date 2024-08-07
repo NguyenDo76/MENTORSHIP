@@ -30,10 +30,10 @@ Given an integer n, create an array with n random integers from 0 to 9. Calculat
 ### Question 3: Calculate the sum of all prime numbers in the array.
 Given an integer n, create an array with n random integers from 0 to 9. Calculate the sum of all prime numbers in the array.
 
- - **Prime(Integer nm): Check whether an integer number is prime.**
+ - **Prime(Integer m): Check whether an integer number is prime.**
 <img width="500" src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/FLOWGORITHM%20EXERCISE/IMAGE/20240718%20-%20question%203%20-%20sum%20of%20all%20prime%20numbers%20in%20the%20array%20-%20Prime.png">
 
-- **Main function.**
+- **Main function:**
 
 <img width="500" src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/FLOWGORITHM%20EXERCISE/IMAGE/20240718%20-%20question%203%20-%20sum%20of%20all%20prime%20numbers%20in%20the%20array%20-%20Main.png">
 
