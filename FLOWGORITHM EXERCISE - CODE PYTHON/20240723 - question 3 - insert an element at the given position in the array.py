@@ -20,7 +20,7 @@ def PrintArray (n,a):
 print ('Given an integer n, create an array with n random integers from 0 to 9. Insert an element at the given position in the array.')
 print ('Enter number n = ')
 n = int (input ())
-a = []  # Initialize a as an empty list
+a = []
 for i in range (0,n-1 + 1,1):
   a.append(rd.randint (0,9))
 print ('Original array: ')
