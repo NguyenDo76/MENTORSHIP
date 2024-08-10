@@ -26,6 +26,8 @@ Danny, the CEO of this trendy fashion company has asked you to assist the teamâ€
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
+<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%207%20-%20BALANCED%20TREE.png">
+
 ---
 
 <a name="example"></a>
@@ -92,7 +94,7 @@ Danny, the CEO of this trendy fashion company has asked you to assist the teamâ€
 |18|6|PinkFluroPolkadot|Style|
 
 
-**Table 4: product_price**
+**Table 4: product_prices**
 
 |id|product_id|price|
 |---|---|---|
