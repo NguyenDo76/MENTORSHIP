@@ -28,10 +28,12 @@ Danny started by recruiting “runners” to deliver fresh pizza from Pizza Runn
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
+<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%202%20-%20PIZZA%20RUNNER.png">
+
 <a name="example"></a>
 ## :open_book: Example Datasets
 
-**Table 1: Runner**
+**Table 1: runner**
 | runner_id | registration_date |
 | :-------- | :---------------- |
 | 1         | 2021-01-01        |
