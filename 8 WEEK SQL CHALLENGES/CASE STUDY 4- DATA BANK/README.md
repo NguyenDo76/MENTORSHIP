@@ -30,6 +30,8 @@ This case study is all about calculating metrics, growth and helping the busines
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
+<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%204-%20DATA%20BANK.png">
+
 <a name="example"></a>
 ## :open_book: Example Datasets
 
