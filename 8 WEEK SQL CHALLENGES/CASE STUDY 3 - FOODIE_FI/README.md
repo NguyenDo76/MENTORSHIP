@@ -12,7 +12,7 @@ Find the full case study [**here**](https://8weeksqlchallenge.com/case-study-3/)
    - [C. Challenge Payment Question](#payment)
    - [D. Outside The Box Questions](#outside)
 
-
+---
 <a name="introduction"></a>
 ## :question: Introduction
 
@@ -27,6 +27,7 @@ Danny created Foodie-Fi with a data driven mindset and wanted to ensure all futu
 
 <img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%203%20-%20FOODIE_FI.png">
 
+---
 <a name="example"></a>
 ## :open_book: Example Datasets
 
@@ -65,6 +66,8 @@ Danny created Foodie-Fi with a data driven mindset and wanted to ensure all futu
 | 19          | 2       | 2020-06-29 |
 | 19          | 3       | 2020-08-29 |
 
+
+---
 <a name="solution"></a>
 ## :boom: Questions and Solution
 <a name="customer"></a>
@@ -74,6 +77,8 @@ Based off the 8 sample customers provided in the sample from the subscriptions t
 
 Try to keep it as short as possible - you may also want to run some sort of join to make your explanations a bit easier!
 
+
+---
 <a name="analysis"></a>
 ### **B. Data Analysis Questions**
 
@@ -314,6 +319,8 @@ where plan_id = 2 and next_plan_id = 1
 |---|
 |0|
 
+
+---
 <a name="payment"></a>
 ### **C. Challenge Payment Question**
 
@@ -354,6 +361,8 @@ where plan_id = 2 and next_plan_id = 1
 
 
 
+
+---
 <a name="outside"></a>
 ### **D. Outside The Box Questions**
 
