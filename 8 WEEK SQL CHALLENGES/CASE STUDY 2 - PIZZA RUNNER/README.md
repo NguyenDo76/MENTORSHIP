@@ -14,6 +14,8 @@ Find the full case study [**here**](https://8weeksqlchallenge.com/case-study-2/)
    - [D. Pricing and Ratings](#pricing)
    - [E. Bonus Questions](bonus)
 
+
+---
 <a name="introduction"></a>
 ## :question: Introduction
 
@@ -25,11 +27,15 @@ Danny was sold on the idea, but he knew that pizza alone was not going to help h
 
 Danny started by recruiting “runners” to deliver fresh pizza from Pizza Runner Headquarters (otherwise known as Danny’s house) and also maxed out his credit card to pay freelance developers to build a mobile app to accept orders from customers.
 
+
+---
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
 <img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%202%20-%20PIZZA%20RUNNER.png">
 
+
+---
 <a name="example"></a>
 ## :open_book: Example Datasets
 
@@ -68,7 +74,9 @@ Danny started by recruiting “runners” to deliver fresh pizza from Pizza Runn
 
 | order_id | runner_id | pickup_time         | distance | duration   | cancellation            |
 | :------- | :-------- | :------------------ | :------- | :--------- | :---------------------- |
-| 1        | 1         | 2021-01-01 18:15:34 | 20km     | 32 minutes | 2                       | 1 | 2021-01-01 19:10:54 | 20km | 27 minutes | 3 | 1 | 2021-01-03 00:12:37 | 13.4km | 20 mins | NaN |
+| 1        | 1         | 2021-01-01 18:15:34 | 20km     | 32 minutes |                         |
+| 2        | 1         | 2021-01-01 19:10:54 | 20km     | 27 minutes |                         |
+| 3        | 1         | 2021-01-03 00:12:37 | 13.4km   | 20 mins    | NaN                     |
 | 4        | 2         | 2021-01-04 13:53:03 | 23.4     | 40         | NaN                     |
 | 5        | 3         | 2021-01-08 21:10:57 | 10       | 15         | NaN                     |
 | 6        | 3         | null                | null     | null       | Restaurant Cancellation |
@@ -114,6 +122,8 @@ Danny started by recruiting “runners” to deliver fresh pizza from Pizza Runn
 | 11         | Tomatoes     |
 | 12         | Tomato Sauce |
 
+
+---
 <a name="solution"></a>
 ## :boom: Questions and Solution
 <a name="datacleaning"></a>
@@ -257,6 +267,8 @@ where exclusions != '';
 |5|10|104|1|2|
 |6|10|104|1|6|
 
+
+---
 <a name="metrics"></a>
 ### **A. Pizza Metrics**
  - **Question 1: How many pizzas were ordered?**
@@ -437,6 +449,7 @@ group by datename (dw,order_time);
 |Thursday|3|
 |Wednesday|5|
 
+---
 <a name="experience"></a>
 ### **B. Runner and Customer Experience**
  - **Question 1: How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)**
@@ -577,6 +590,7 @@ group by runner_id;
 |2|75|
 |3|50|
 
+---
 <a name="ingredient"></a>
 ### **C. Ingredient Optimisation**
  - **Question 1: What are the standard ingredients for each pizza?**
@@ -638,7 +652,7 @@ group by t.topping_id, cast (topping_name as varchar (50));
  - **Question 5: Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients. For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"**
  - **Question 6: What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?**
 
-
+---
 <a name="pricing"></a>
 ### **D. Pricing and Ratings**
  - **Question 1: If a Meat Lovers pizza costs $12 and Vegetarian costs $10 and there were no charges for changes - how much money has Pizza Runner made so far if there are no delivery fees?**
@@ -658,6 +672,8 @@ group by t.topping_id, cast (topping_name as varchar (50));
    - Total number of pizzas
  - **Question 5: If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?**
 
+
+---
 <a name="bonus"></a>
 ### **E. Bonus Questions**
 **If Danny wants to expand his range of pizzas - how would this impact the existing data design? Write an INSERT statement to demonstrate what would happen if a new Supreme pizza with all the toppings was added to the Pizza Runner menu?**
