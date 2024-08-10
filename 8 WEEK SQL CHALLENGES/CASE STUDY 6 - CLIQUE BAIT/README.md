@@ -25,6 +25,8 @@ In this case study - you are required to support Danny’s vision and analyse hi
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
+<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%206%20-%20CLIQUE%20BAIT.png">
+
 ---
 
 <a name="example"></a>
