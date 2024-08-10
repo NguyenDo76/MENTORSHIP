@@ -29,6 +29,8 @@ Danny has asked for your assistance to analyse aggregated metrics for an example
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
+<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%208%20-%20FRESH%20SEGMENTS.png">
+
 ---
 
 <a name="example"></a>
