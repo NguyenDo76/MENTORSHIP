@@ -25,10 +25,12 @@ Danny created Foodie-Fi with a data driven mindset and wanted to ensure all futu
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
+<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%203%20-%20FOODIE_FI.png">
+
 <a name="example"></a>
 ## :open_book: Example Datasets
 
-**Table 1: Plans**
+**Table 1: plans**
 
 | plan_id | plan_name     | price |
 | :------ | :------------ | :---- |
@@ -38,7 +40,7 @@ Danny created Foodie-Fi with a data driven mindset and wanted to ensure all futu
 | 3       | pro annual    | 199   |
 | 4       | churn         | null  |
 
-**Table 2: Subscriptions**
+**Table 2: subscriptions**
 
 | customer_id | plan_id | start_date |
 | :---------- | :------ | :--------- |
