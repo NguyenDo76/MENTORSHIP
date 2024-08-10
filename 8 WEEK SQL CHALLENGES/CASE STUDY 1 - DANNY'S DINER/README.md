@@ -18,12 +18,14 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
+<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%201%20-%20DANNY'S%20DINER.png">
+
 <a name="example"></a>
 ## :open_book: Example Datasets
 
 
   
-**Table 1: Sales**
+**Table 1: sales**
 |customer_id|order_date|product_id|
 |---|---|---|
 |A|2021-01-01|1|
@@ -47,7 +49,7 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 
 
   
-**Table 2: Menu**
+**Table 2: menu**
 
 |product_id|product_name|price|
 |---|---|---|
@@ -59,7 +61,7 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 
 
 
-**Table 3: Members**
+**Table 3: members**
 
 |customer_id|join_date|
 |---|---|
