@@ -7,7 +7,10 @@ Find the full case study [**here**](https://8weeksqlchallenge.com/case-study-1/)
  - [Entity Relationship Diagram](#entity)
  - [Example Datasets](#example)
  - [Questions and Solution](#solution)
+   - [A. Case Study Questions](#question)
+   - [B. Bonus Questions](#bonus)
 
+---
 <a name="introduction"></a>
 ## :question: Introduction
 
@@ -15,11 +18,13 @@ Danny seriously loves Japanese food so in the beginning of 2021, he decides to e
 
 Danny’s Diner is in need of your assistance to help the restaurant stay afloat - the restaurant has captured some very basic data from their few months of operation but have no idea how to use their data to help them run the business.
 
+---
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
 <img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%201%20-%20DANNY'S%20DINER.png">
 
+---
 <a name="example"></a>
 ## :open_book: Example Datasets
 
@@ -70,11 +75,14 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 
 </div>
 
-
+---
 <a name="solution"></a>
 ## :boom: Questions and Solution
 
-### **Question 1: What is the total amount each customer spent at the restaurant?**
+<a name="question"></a>
+### **A. Case Study Questions**
+
+  - **Question 1: What is the total amount each customer spent at the restaurant?**
 
 ```tsql
 
@@ -90,7 +98,7 @@ group by s.customer_id;
 |B|74|
 |C|36|
 
-### **Question 2: How many days has each customer visited the restaurant?**
+ - **Question 2: How many days has each customer visited the restaurant?**
 
 ```tsql
 
@@ -106,7 +114,7 @@ group by customer_id;
 |B|6|
 |C|2|
 
-### **Question 3: What was the first item from the menu purchased by each customer?**
+ - **Question 3: What was the first item from the menu purchased by each customer?**
 
 ```tsql
 
@@ -128,7 +136,7 @@ group by customer_id, product_name;
 |B|curry|
 |C|ramen|
 
-### **Question 4: What is the most purchased item on the menu and how many times was it purchased by all customers?**
+ - **Question 4: What is the most purchased item on the menu and how many times was it purchased by all customers?**
 
 ```tsql
 
@@ -143,7 +151,7 @@ group by m.product_name;
 |---|---|
 |curry|4|
 
-### **Question 5: Which item was the most popular for each customer?**
+ - **Question 5: Which item was the most popular for each customer?**
 
 ```tsql
 
@@ -166,7 +174,7 @@ where rank_product = 1;
 |B|ramen|2|
 |C|ramen|3|
 
-### **Question 6: Which item was purchased first by the customer after they became a member?**
+ - **Question 6: Which item was purchased first by the customer after they became a member?**
 
 ***Method 1:***
 ```tsql
@@ -212,7 +220,7 @@ where rank = 1;
 |B|1|sushi|
 
 
-### **Question 7: Which item was purchased just before the customer became a member?**
+ - **Question 7: Which item was purchased just before the customer became a member?**
 
 ***Method 1:***
 
@@ -260,7 +268,7 @@ where rank = 1;
 |A|1|sushi|
 |B|1|sushi|
 
-### **Question 8: What is the total items and amount spent for each member before they became a member?**
+ - **Question 8: What is the total items and amount spent for each member before they became a member?**
 
 ```tsql
 
@@ -280,7 +288,7 @@ group by s.customer_id;
 |B|3|40|
 
 
-### **Question 9: If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?**
+ - **Question 9: If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?**
 
 ```tsql
 with cte_points as (select s.customer_id,
@@ -300,7 +308,7 @@ group by customer_id;
 |B|940|
 |C|360|
 
-### **Question 10: In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?**
+ - **Question 10: In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?**
 
 ***REF 1:***
 
@@ -350,8 +358,12 @@ group by customer_id;
 |A|1020|
 |B|320|
 
+---
+<a name="bonus"></a>
+### B. **Bonus question:**
+ - **Join All The Things**
 
-### **Bonus question: Join All The Things**
+
 The following questions are related creating basic data tables that Danny and his team can use to quickly derive insights without needing to join the underlying tables using SQL.
 Recreate the following table output using the available data:
 
@@ -381,7 +393,10 @@ left join members mb on mb.customer_id = s.customer_id;
 |C|2021-01-01|ramen|12|N|
 |C|2021-01-07|ramen|12|N|
 
-### **Rank All The Things**
+
+ - **Rank All The Things**
+
+
 Danny also requires further information about the ranking of customer products, but he purposely does not need the ranking for non-member purchases so he expects null ranking values for the records when customers are not yet part of the loyalty program.
 
 ```tsql
