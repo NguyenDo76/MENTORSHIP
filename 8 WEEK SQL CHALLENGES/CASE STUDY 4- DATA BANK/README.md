@@ -12,7 +12,7 @@ Find the full case study [**here**](https://8weeksqlchallenge.com/case-study-4/)
    - [C. Data Allocation Challenge](#allocation)
    - [D. Extra Challenge](#extra)
    - [E. Extension Request](extension)
-
+---
 <a name="introduction"></a>
 ## :question: Introduction
 There is a new innovation in the financial industry called Neo-Banks: new aged digital only banks without physical branches.
@@ -27,11 +27,14 @@ The management team at Data Bank want to increase their total customer base - bu
 
 This case study is all about calculating metrics, growth and helping the business analyse their data in a smart way to better forecast and plan for their future developments!
 
+---
+
 <a name="entity"></a>
 ## :bookmark: Entity Relationship Diagram
 
 <img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/IMAGE/CASE%20STUDY%204-%20DATA%20BANK.png">
 
+---
 <a name="example"></a>
 ## :open_book: Example Datasets
 
@@ -74,6 +77,8 @@ This case study is all about calculating metrics, growth and helping the busines
 | 376         | 2020-01-03 | deposit  | 706        |
 | 188         | 2020-01-13 | deposit  | 601        |
 | 138         | 2020-01-11 | deposit  | 520        |
+
+---
 
 <a name="solution"></a>
 ## :boom: Questions and Solution
@@ -171,7 +176,7 @@ join [data_bank.regions] r on d.region_id = r.region_id;
 |Australia|21|34|51|
 
 
-
+---
 <a name="transactions"></a>
 ### **B. Customer Transactions**
  - **Question 1: What is the unique count and total amount for each transaction type?**
@@ -319,6 +324,7 @@ order by customer_id, month;
 
 ***The result has 1720 rows***
 
+---
 <a name="allocation"></a>
 ### **C. Data Allocation Challenge**
 **To test out a few different hypotheses - the Data Bank team wants to run an experiment where different groups of customers would be allocated data using 3 different options:**
@@ -332,7 +338,7 @@ order by customer_id, month;
   - **customer balance at the end of each month**
   - **minimum, average and maximum values of the running balance for each customer**
 **Using all of the data available - how much data would have been required for each option on a monthly basis?**
-
+---
 <a name="extra"></a>
 ### **D. Extra Challenge**
 **Data Bank wants to try another option which is a bit more difficult to implement - they want to calculate data growth using an interest calculation, just like in a traditional savings account you might have with a bank.**
@@ -342,7 +348,7 @@ order by customer_id, month;
 **Special notes:**
 
 - **Data Bank wants an initial calculation which does not allow for compounding interest, however they may also be interested in a daily compounding interest calculation so you can try to perform this calculation if you have the stamina!**
-
+---
 <a name="extension"></a>
 ### **E. Extension Request**
 
