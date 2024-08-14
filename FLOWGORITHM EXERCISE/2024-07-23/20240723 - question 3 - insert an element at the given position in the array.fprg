@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Admin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-08-08 06:27:06 PM"/>
+        <attribute name="created" value="QWRtaW47QURNSU47MjAyNC0wNy0yNDswOToyMjowMSBQTTsyMTI5"/>
+        <attribute name="edited" value="QWRtaW47QURNSU47MjAyNC0wOC0wODswNjoyNzowNiBQTTs3OzIyNTM="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <output expression="&quot; Given an integer n, create an array with n random integers from 0 to 9. Insert an element at the given position in the array&quot;" newline="True"/>
+            <output expression="&quot;Enter number n = &quot;" newline="True"/>
+            <declare name="n, position, InsertValue" type="Integer" array="False" size=""/>
+            <input variable="n"/>
+            <declare name="a" type="Integer" array="True" size="n"/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                <assign variable="a[i]" expression="random (10)"/>
+            </for>
+            <output expression="&quot;Original array: &quot;" newline="False"/>
+            <call expression="PrintArray (n,a)"/>
+            <output expression="&quot;&quot;" newline="True"/>
+            <output expression="&quot;Enter the position to insert: &quot;" newline="True"/>
+            <input variable="position"/>
+            <output expression="&quot;Enter the value to insert: &quot;" newline="True"/>
+            <input variable="InsertValue"/>
+            <call expression="InsertElement (n,position,InsertValue,a)"/>
+        </body>
+    </function>
+    <function name="InsertElement" type="None" variable="count">
+        <parameters>
+            <parameter name="n" type="Integer" array="False"/>
+            <parameter name="position" type="Integer" array="False"/>
+            <parameter name="InsertValue" type="Integer" array="False"/>
+            <parameter name="a" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <if expression="position &lt; 0 or position &gt;= n">
+                <then>
+                    <output expression="&quot;Position out of range&quot;" newline="True"/>
+                </then>
+                <else>
+                    <declare name="Newa" type="Integer" array="True" size="n+1"/>
+                    <assign variable="Newa[position]" expression="InsertValue"/>
+                    <for variable="i" start="0" end="position - 1" direction="inc" step="1">
+                        <assign variable="Newa[i]" expression="a[i]"/>
+                    </for>
+                    <for variable="i" start="position" end="n-1" direction="inc" step="1">
+                        <assign variable="Newa[i+1]" expression="a[i]"/>
+                    </for>
+                    <output expression="&quot;Array after insertion: &quot;" newline="False"/>
+                    <call expression="PrintArray (n+1, Newa)"/>
+                </else>
+            </if>
+        </body>
+    </function>
+    <function name="PrintArray" type="None" variable="">
+        <parameters>
+            <parameter name="n" type="Integer" array="False"/>
+            <parameter name="a" type="Integer" array="True"/>
+        </parameters>
+        <body>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                <output expression="a[i]&amp;&quot;,&quot;" newline="False"/>
+            </for>
+        </body>
+    </function>
+</flowgorithm>
