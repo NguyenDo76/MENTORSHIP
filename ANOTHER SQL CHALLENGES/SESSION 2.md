@@ -9,7 +9,7 @@
 ----
 
 # 📑 Entity Relationship Diagram
-<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/8%20WEEK%20SQL%20CHALLENGES/ANOTHER%20CHALLENGES/IMAGE/session%202.png">
+<img src="https://github.com/NguyenDo76/MENTORSHIP/blob/main/ANOTHER%20SQL%20CHALLENGES/IMAGE/session%202.png">
 
 # :tada: Solution
 
