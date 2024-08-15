@@ -77,8 +77,7 @@ Danny has asked for your assistance to analyse aggregated metrics for an example
  - **Question 1: Update the fresh_segments.interest_metrics table by modifying the month_year column to be a date data type with the start of the month**
 
 ```tsql
-alter table [fresh_segments.interest_metrics]
-alter column month_year varchar (10);
+
 
 UPDATE [fresh_segments.interest_metrics]
 SET month_year =  CONVERT(DATE, '01-' + month_year, 105);
@@ -127,6 +126,8 @@ order by month_year;
 
  - **Question 3: What do you think we should do with these null values in the fresh_segments.interest_metrics**
 
+It is dropping the rows where the month_year value is missing because there are rows with missing values on the month_year column and missing interest_id values. That means the aggregated values for those rows don't point/map to any interest in the fresh_segment.interest_map table.
+
 ```tsql
 select *
 from [fresh_segments.interest_metrics]
@@ -149,9 +150,6 @@ group by month_year
 order by month_year;
 ```
 
-
-
-
 ```tsql
 delete from [fresh_segments.interest_metrics]
 where interest_id is null;
@@ -166,7 +164,7 @@ select count (distinct interest_id) as count_interest_id_metrics,
        sum (case when interest_id is null then 1 else 0 end) as count_not_in_metrics,
        sum (case when id is null then 1 else 0 end) as count_not_in_map
 from [fresh_segments.interest_metrics] me
-full join [dbo].[fresh_segments.interest_map.] ma on me.interest_id = ma.id;
+full join [dbo].[fresh_segments.interest_map] ma on me.interest_id = ma.id;
 ```
 
 |count_interest_id_metrics|count_id_map|count_not_in_metrics|count_not_in_map|
@@ -177,7 +175,7 @@ full join [dbo].[fresh_segments.interest_map.] ma on me.interest_id = ma.id;
 
 ```tsql
 select count (*) as count_id
-from [fresh_segments.interest_map.];
+from [fresh_segments.interest_map];
 ```
 |count_id|
 |---|
@@ -189,7 +187,7 @@ from [fresh_segments.interest_map.];
 ```tsql
 select me.*, interest_name, interest_summary, created_at, last_modified
 from [fresh_segments.interest_metrics] me
-join [fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [fresh_segments.interest_map] ma on ma.id = me.interest_id
 where interest_id = '21246';
 ```
 
@@ -212,7 +210,7 @@ where interest_id = '21246';
 ```tsql
 select count (interest_id) as count_id
 from [fresh_segments.interest_metrics] me
-join [fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [fresh_segments.interest_map] ma on ma.id = me.interest_id
 where month_year < created_at;
 ```
 |count_id|
@@ -222,7 +220,7 @@ where month_year < created_at;
 ```tsql
 select count (interest_id) as count_id
 from [fresh_segments.interest_metrics] me
-join [fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [fresh_segments.interest_map] ma on ma.id = me.interest_id
 where datetrunc (month, month_year) < datetrunc (month, created_at);
 ```
 
@@ -230,7 +228,7 @@ where datetrunc (month, month_year) < datetrunc (month, created_at);
 |---|
 |0|
 
-***--> moth_year is frist day in month so we use datetrunc that to comparing with month -> result is 0 id***
+***--> moth_year is the first day in a month so we use datetrunc to compare with month -> result is 0 id***
 
 
 ---
@@ -314,17 +312,17 @@ with cte_interest_remove as (select interest_id,
                                     count (interest_id) as count_month
                              from [fresh_segments.interest_metrics]
                              group by interest_id
-                             having count (interest_id) > 6)
+                             having count (interest_id) >= 6)
 
 select count (interest_id) as interest_id_remove
 from [fresh_segments.interest_metrics]
-where interest_id in (select interest_id 
+where interest_id not in (select interest_id 
                       from cte_interest_remove);
 ```
 
 |interest_id_remove|
 |---|
-|12482|
+|400|
 
  - **Question 4: Does this decision make sense to remove these data points from a business perspective? Use an example where there are all 14 months present to a removed interest example for your arguments - think about what it means to have less months present from a segment perspective.**
 
@@ -337,15 +335,221 @@ where interest_id in (select interest_id
 ### **C. Segment Analysis**
 
  - **Question 1: Using our filtered dataset by removing the interests with less than 6 months worth of data, which are the top 10 and bottom 10 interests which have the largest composition values in any month_year? Only use the maximum composition value for each interest but you must keep the corresponding month_year**
+
+
+    - ***Create table has filtered dataset by removing the interests with less than 6 months worth of data***
+
+ ```tsql
+
+ with cte_interest_remove as (select interest_id,
+                                    count (interest_id) as count_month
+                             from [fresh_segments.interest_metrics]
+                             group by interest_id
+                             having count (interest_id) < 6)
+select *
+into ##filtered_interest
+from [fresh_segments.interest_metrics]
+where interest_id not in (select interest_id from cte_interest_remove);
+```
+
+|month|year|month_year|interest_id|composition|index_value|ranking|percentile_ranking|
+|---|---|---|---|---|---|---|---|
+|7|2018|2018-07-01|32486|11.89|6.19|1|99.86|
+|7|2018|2018-07-01|6106|9.93|5.31|2|99.73|
+|7|2018|2018-07-01|18923|10.85|5.29|3|99.59|
+|7|2018|2018-07-01|6344|10.32|5.1|4|99.45|
+|7|2018|2018-07-01|100|10.77|5.04|5|99.31|
+|7|2018|2018-07-01|69|10.82|5.03|6|99.18|
+|7|2018|2018-07-01|79|11.21|4.97|7|99.04|
+|7|2018|2018-07-01|6111|10.71|4.83|8|98.9|
+|7|2018|2018-07-01|6214|9.71|4.83|8|98.9|
+|7|2018|2018-07-01|19422|10.11|4.81|10|98.63|
+|7|2018|2018-07-01|6110|11.57|4.79|11|98.49|
+|7|2018|2018-07-01|4895|9.47|4.67|12|98.35|
+|7|2018|2018-07-01|6217|10.8|4.62|13|98.22|
+|7|2018|2018-07-01|4|13.97|4.53|14|98.08|
+|7|2018|2018-07-01|6218|9.29|4.5|15|97.94|
+|7|2018|2018-07-01|6123|9.49|4.49|16|97.81|
+|7|2018|2018-07-01|171|14.91|4.47|17|97.67|
+|7|2018|2018-07-01|19613|12.62|4.38|18|97.53|
+|7|2018|2018-07-01|17|7.89|4.15|19|97.39|
+|7|2018|2018-07-01|6|11.99|4.08|20|97.26|
+
+
+   - ***Top 10 interests which have the largest composition values in any month_year***
+
+```tsql
+
+with cte_interest_removed as (select interest_id, month_year,
+                                     max (composition) as max_composition,
+                                     dense_rank () over (partition by interest_id order by max (composition) desc) as rank_composition
+                              from ##filtered_interest
+                              where month_year is not null
+                              group by interest_id, month_year)
+
+select month_year, interest_name, max_composition
+from cte_interest_removed cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where rank_composition <= 10
+order by month_year, max_composition desc;
+```
+
+|month_year|interest_name|max_composition|
+|---|---|---|
+|2018-07-01|Gym Equipment Owners|18.82|
+|2018-07-01|Furniture Shoppers|17.44|
+|2018-07-01|Luxury Retail Shoppers|17.19|
+|2018-07-01|Shoe Shoppers|14.91|
+|2018-07-01|Cosmetics and Beauty Shoppers|14.23|
+|2018-07-01|Luxury Hotel Guests|14.1|
+|2018-07-01|Luxury Retail Researchers|13.97|
+|2018-07-01|Womens Fashion Brands Shoppers|13.67|
+|2018-07-01|Reusable Drinkware Shoppers|13.35|
+|2018-07-01|Parents of Teenagers Going to College|12.93|
+|2018-07-01|Luxury Kitchen Goods Shoppers|12.87|
+|2018-07-01|Land Rover Shoppers|12.62|
+|2018-07-01|Pandora Jewelry Shoppers|12.27|
+|2018-07-01|Kitchen Appliance Shoppers|12.22|
+|2018-07-01|Vacation Planners|11.99|
+
+
+***The result has 10460 rows***
+
+   - ***Bottom 10 interests which have the largest composition values in any month_year***
+
+```tsql
+
+with cte_interest_removed as (select interest_id, month_year,
+                                     max (composition) as max_composition,
+                                     dense_rank () over (partition by interest_id order by max (composition)) as rank_composition
+                              from ##filtered_interest
+                              where month_year is not null
+                              group by interest_id, month_year)
+
+
+select month_year, interest_name, max_composition
+from cte_interest_removed cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where rank_composition < 10
+order by month_year, max_composition;
+```
+
+|month_year|interest_name|max_composition|
+|---|---|---|
+|2018-07-01|Solar Energy Researchers|1.71|
+|2018-07-01|Readers of Malayalam Content|1.77|
+|2018-07-01|Beard Care Shoppers|1.81|
+|2018-07-01|Gamers|1.81|
+|2018-07-01|Video Gamers|1.82|
+|2018-07-01|Camaro Enthusiasts|1.9|
+|2018-07-01|Dodge Vehicle Shoppers|1.92|
+|2018-07-01|Truck Shoppers|1.96|
+|2018-07-01|Mercedes-Benz Vehicle Shoppers|2.01|
+|2018-07-01|Readers of Tamil Content|2.04|
+|2018-07-01|Xbox Enthusiasts|2.05|
+|2018-07-01|Dirt Bike Enthusiasts|2.09|
+|2018-07-01|Super Mario Bros Fans|2.12|
+|2018-07-01|Ford Mustang Enthusiasts|2.13|
+|2018-07-01|Truck Drivers|2.14|
+|2018-07-01|Tractor Shoppers|2.15|
+
+
+***The result has 9663 rows***
+
  - **Question 2: Which 5 interests had the lowest average ranking value?**
+
+```tsql
+
+with cte_rank_avg_ranking_by_interest_id as (select interest_id,
+                                                    avg (ranking) as avg_ranking,
+                                                    row_number () over (order by avg (ranking) asc) as rank_avg_ranking_by_interest_id
+                                             from ##filtered_interest
+                                             group by interest_id)
+
+select interest_name, avg_ranking
+from cte_rank_avg_ranking_by_interest_id cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where rank_avg_ranking_by_interest_id <= 5
+order by 2 asc
+```
+
+|interest_name|avg_ranking|
+|---|---|
+|Winter Apparel Shoppers|1|
+|Fitness Activity Tracker Users|4|
+|Mens Shoe Shoppers|5|
+|Shoe Shoppers|9|
+|Preppy Clothing Shoppers|11|
+
  - **Question 3: Which 5 interests had the largest standard deviation in their percentile_ranking value?**
+
+```tsql
+with cte_rank_std_percentile_ranking_by_interest_id as (select interest_id,
+                                                                   round (stdev (percentile_ranking),2) as std_percentile_ranking,
+                                                                   row_number () over (order by stdev (percentile_ranking) desc) as rank_std_percentile_ranking_by_interest_id
+                                                            from ##filtered_interest
+                                                            group by interest_id)
+
+select interest_name, std_percentile_ranking
+from cte_rank_std_percentile_ranking_by_interest_id cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where rank_std_percentile_ranking_by_interest_id <= 5
+order by 2 desc
+```
+
+|interest_name|std_percentile_ranking|
+|---|---|
+|Techies|30.18|
+|Entertainment Industry Decision Makers|28.97|
+|Oregon Trip Planners|28.32|
+|Personalized Gift Shoppers|26.24|
+|Tampa and St Petersburg Trip Planners|25.61|
+
+
  - **Question 4: For the 5 interests found in the previous question - what was minimum and maximum percentile_ranking values for each interest and its corresponding year_month value? Can you describe what is happening for these 5 interests?**
+
+```tsql
+with cte_rank_std_percentile_ranking_by_interest_id as (select interest_id,
+                                                                   round (stdev (percentile_ranking),2) as std_percentile_ranking,
+                                                                   row_number () over (order by stdev (percentile_ranking) desc) as rank_std_percentile_ranking_by_interest_id
+                                                            from ##filtered_interest
+                                                            group by interest_id),
+
+     cte_max_min as (select month_year, interest_id, percentile_ranking,
+                            row_number () over (partition by interest_id order by percentile_ranking desc) as max_percentile_ranking,
+                            row_number () over (partition by interest_id order by percentile_ranking asc) as min_percentile_ranking
+                     from [fresh_segments.interest_metrics] me
+                     where interest_id in (select interest_id
+                                           from cte_rank_std_percentile_ranking_by_interest_id
+                                           where rank_std_percentile_ranking_by_interest_id <= 5))
+
+select month_year, cast (interest_name as varchar (50)) as interest_name, percentile_ranking 
+from cte_max_min cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where max_percentile_ranking = 1 or min_percentile_ranking = 1
+order by cast (interest_name as varchar (50)), percentile_ranking desc
+```
+
+|month_year|interest_name|percentile_ranking|
+|---|---|---|
+|2018-07-01|Entertainment Industry Decision Makers|86.15|
+|2019-08-01|Entertainment Industry Decision Makers|11.23|
+|2018-11-01|Oregon Trip Planners|82.44|
+|2019-07-01|Oregon Trip Planners|2.2|
+|2019-03-01|Personalized Gift Shoppers|73.15|
+|2019-06-01|Personalized Gift Shoppers|5.7|
+|2018-07-01|Tampa and St Petersburg Trip Planners|75.03|
+|2019-03-01|Tampa and St Petersburg Trip Planners|4.84|
+|2018-07-01|Techies|86.69|
+|2019-08-01|Techies|7.92|
+
+
  - **Question 5: How would you describe our customers in this segment based off their composition and ranking values? What sort of products or services should we show to these customers and what should we avoid?**
 ---
 
 <a name="index"></a>
 ### **D. Index Analysis**
-**The index_value is a measure which can be used to reverse calculate the average composition for Fresh Segments’ clients.**
+**The index_value is a measure which can be used to reverse calculate the average composition for Fresh Segments' clients.**
 
 **Average composition can be calculated by dividing the composition column by the index_value column rounded to 2 decimal places.**
 
