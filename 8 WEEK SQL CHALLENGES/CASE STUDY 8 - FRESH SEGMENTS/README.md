@@ -77,8 +77,7 @@ Danny has asked for your assistance to analyse aggregated metrics for an example
  - **Question 1: Update the fresh_segments.interest_metrics table by modifying the month_year column to be a date data type with the start of the month**
 
 ```tsql
-alter table [fresh_segments.interest_metrics]
-alter column month_year varchar (10);
+
 
 UPDATE [fresh_segments.interest_metrics]
 SET month_year =  CONVERT(DATE, '01-' + month_year, 105);
@@ -127,6 +126,8 @@ order by month_year;
 
  - **Question 3: What do you think we should do with these null values in the fresh_segments.interest_metrics**
 
+It is dropping the rows where the month_year value is missing because there are rows with missing values on the month_year column and missing interest_id values. That means the aggregated values for those rows don't point/map to any interest in the fresh_segment.interest_map table.
+
 ```tsql
 select *
 from [fresh_segments.interest_metrics]
@@ -149,9 +150,6 @@ group by month_year
 order by month_year;
 ```
 
-
-
-
 ```tsql
 delete from [fresh_segments.interest_metrics]
 where interest_id is null;
@@ -166,7 +164,7 @@ select count (distinct interest_id) as count_interest_id_metrics,
        sum (case when interest_id is null then 1 else 0 end) as count_not_in_metrics,
        sum (case when id is null then 1 else 0 end) as count_not_in_map
 from [fresh_segments.interest_metrics] me
-full join [dbo].[fresh_segments.interest_map.] ma on me.interest_id = ma.id;
+full join [dbo].[fresh_segments.interest_map] ma on me.interest_id = ma.id;
 ```
 
 |count_interest_id_metrics|count_id_map|count_not_in_metrics|count_not_in_map|
@@ -177,7 +175,7 @@ full join [dbo].[fresh_segments.interest_map.] ma on me.interest_id = ma.id;
 
 ```tsql
 select count (*) as count_id
-from [fresh_segments.interest_map.];
+from [fresh_segments.interest_map];
 ```
 |count_id|
 |---|
@@ -189,7 +187,7 @@ from [fresh_segments.interest_map.];
 ```tsql
 select me.*, interest_name, interest_summary, created_at, last_modified
 from [fresh_segments.interest_metrics] me
-join [fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [fresh_segments.interest_map] ma on ma.id = me.interest_id
 where interest_id = '21246';
 ```
 
@@ -212,7 +210,7 @@ where interest_id = '21246';
 ```tsql
 select count (interest_id) as count_id
 from [fresh_segments.interest_metrics] me
-join [fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [fresh_segments.interest_map] ma on ma.id = me.interest_id
 where month_year < created_at;
 ```
 |count_id|
@@ -222,7 +220,7 @@ where month_year < created_at;
 ```tsql
 select count (interest_id) as count_id
 from [fresh_segments.interest_metrics] me
-join [fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [fresh_segments.interest_map] ma on ma.id = me.interest_id
 where datetrunc (month, month_year) < datetrunc (month, created_at);
 ```
 
@@ -230,7 +228,7 @@ where datetrunc (month, month_year) < datetrunc (month, created_at);
 |---|
 |0|
 
-***--> moth_year is frist day in month so we use datetrunc that to comparing with month -> result is 0 id***
+***--> moth_year is the first day in a month so we use datetrunc to compare with month -> result is 0 id***
 
 
 ---
