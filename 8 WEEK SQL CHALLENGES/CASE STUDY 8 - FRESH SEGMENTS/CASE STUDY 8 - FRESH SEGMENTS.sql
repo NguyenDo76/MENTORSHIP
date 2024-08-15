@@ -48,7 +48,7 @@ where interest_id = '21246';
 -- 7.Are there any records in your joined table where the month_year value is before the created_at value from the fresh_segments.interest_map table? Do you think these values are valid and why?
 select count (interest_id) as count_id
 from [dbo].[fresh_segments.interest_metrics] me
-join [dbo].[fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [dbo].[fresh_segments.interest_map] ma on ma.id = me.interest_id
 where month_year < created_at;
 --> 188 id
 
