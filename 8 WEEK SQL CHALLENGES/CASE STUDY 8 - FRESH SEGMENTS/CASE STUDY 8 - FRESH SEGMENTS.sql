@@ -1,8 +1,5 @@
 -- A.DATA EXPLORATION AND CLEANSING
 -- 1.Update the fresh_segments.interest_metrics table by modifying the month_year column to be a date data type with the start of the month
-alter table [dbo].[fresh_segments.interest_metrics]
-alter column month_year varchar (10);
-
 UPDATE [dbo].[fresh_segments.interest_metrics]
 SET month_year =  CONVERT(DATE, '01-' + month_year, 105);
 
@@ -36,7 +33,7 @@ select count (distinct interest_id) as count_interest_id_metrics,
        sum (case when interest_id is null then 1 else 0 end) as count_not_in_metrics,
        sum (case when id is null then 1 else 0 end) as count_not_in_map
 from [dbo].[fresh_segments.interest_metrics] me
-full join [dbo].[fresh_segments.interest_map.] ma on me.interest_id = ma.id;
+full join [dbo].[fresh_segments.interest_map] ma on me.interest_id = ma.id;
 
 -- 5.Summarise the id values in the fresh_segments.interest_map by its total record count in this table
 select count (*) as count_id
@@ -45,21 +42,21 @@ from [dbo].[fresh_segments.interest_map.];
 -- 6.What sort of table join should we perform for our analysis and why? Check your logic by checking the rows where interest_id = 21246 in your joined output and include all columns from fresh_segments.interest_metrics and all columns from fresh_segments.interest_map except from the id column.
 select me.*, interest_name, interest_summary, created_at, last_modified
 from [dbo].[fresh_segments.interest_metrics] me
-join [dbo].[fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [dbo].[fresh_segments.interest_map] ma on ma.id = me.interest_id
 where interest_id = '21246';
 
 -- 7.Are there any records in your joined table where the month_year value is before the created_at value from the fresh_segments.interest_map table? Do you think these values are valid and why?
 select count (interest_id) as count_id
 from [dbo].[fresh_segments.interest_metrics] me
-join [dbo].[fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [dbo].[fresh_segments.interest_map] ma on ma.id = me.interest_id
 where month_year < created_at;
 --> 188 id
 
 select count (interest_id) as count_id
 from [dbo].[fresh_segments.interest_metrics] me
-join [dbo].[fresh_segments.interest_map.] ma on ma.id = me.interest_id
+join [dbo].[fresh_segments.interest_map] ma on ma.id = me.interest_id
 where datetrunc (month, month_year) < datetrunc (month, created_at);
---> moth_year is frist day in month so we use datetrunc that to comparing with month -> result is 0 id
+--> moth_year is the first day in a month so we use datetrunc to compare with month -> result is 0 id
 
 
 -- B.INTEREST ANALYSIS
