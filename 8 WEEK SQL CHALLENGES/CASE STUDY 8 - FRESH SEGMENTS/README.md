@@ -549,13 +549,148 @@ order by cast (interest_name as varchar (50)), percentile_ranking desc
 
 <a name="index"></a>
 ### **D. Index Analysis**
-**The index_value is a measure which can be used to reverse calculate the average composition for Fresh Segments' clients.**
 
-**Average composition can be calculated by dividing the composition column by the index_value column rounded to 2 decimal places.**
+**The index_value is a measure which can be used to reverse calculate the average composition for Fresh Segments' clients. Average composition can be calculated by dividing the composition column by the index_value column rounded to 2 decimal places.**
+
+
+```tsql
+select [month],
+       [year],
+       month_year,
+       interest_id,
+       composition,
+       round (composition / index_value, 2) as avg_composition,
+       index_value,
+       ranking,
+       percentile_ranking
+into ##new_interest_metrics
+from [fresh_segments.interest_metrics];
+```
+
+
+|month|year|month_year|interest_id|composition|avg_composition|index_value|ranking|percentile_ranking|
+|---|---|---|---|---|---|---|---|---|
+|7|2018|2018-07-01|32486|11.89|1.92|6.19|1|99.86|
+|7|2018|2018-07-01|6106|9.93|1.87|5.31|2|99.73|
+|7|2018|2018-07-01|18923|10.85|2.05|5.29|3|99.59|
+|7|2018|2018-07-01|6344|10.32|2.02|5.1|4|99.45|
+|7|2018|2018-07-01|100|10.77|2.14|5.04|5|99.31|
+|7|2018|2018-07-01|69|10.82|2.15|5.03|6|99.18|
+|7|2018|2018-07-01|79|11.21|2.26|4.97|7|99.04|
+|7|2018|2018-07-01|6111|10.71|2.22|4.83|8|98.9|
+|7|2018|2018-07-01|6214|9.71|2.01|4.83|8|98.9|
+|7|2018|2018-07-01|19422|10.11|2.1|4.81|10|98.63|
+|7|2018|2018-07-01|6110|11.57|2.42|4.79|11|98.49|
+|7|2018|2018-07-01|4895|9.47|2.03|4.67|12|98.35|
+|7|2018|2018-07-01|6217|10.8|2.34|4.62|13|98.22|
+|7|2018|2018-07-01|4|13.97|3.08|4.53|14|98.08|
+|7|2018|2018-07-01|6218|9.29|2.06|4.5|15|97.94|
+
 
  - **Question 1: What is the top 10 interests by the average composition for each month?**
+
+
+ ```tsql
+ with cte_rank_avg_composition as (select month_year,
+                                         interest_id,
+                                         avg_composition,
+                                         row_number () over (partition by month_year order by avg_composition desc) as rank_avg_composition
+                                  from ##new_interest_metrics me
+                                  where [month] is not null)
+
+select month_year,
+       interest_name,
+       avg_composition
+from cte_rank_avg_composition cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where rank_avg_composition <= 10;
+```
+
+|month_year|interest_name|avg_composition|
+|---|---|---|
+|2018-07-01|Las Vegas Trip Planners|7.36|
+|2018-07-01|Gym Equipment Owners|6.94|
+|2018-07-01|Cosmetics and Beauty Shoppers|6.78|
+|2018-07-01|Luxury Retail Shoppers|6.61|
+|2018-07-01|Furniture Shoppers|6.51|
+|2018-07-01|Asian Food Enthusiasts|6.1|
+|2018-07-01|Recently Retired Individuals|5.72|
+|2018-07-01|Family Adventures Travelers|4.85|
+|2018-07-01|Work Comes First Travelers|4.8|
+|2018-07-01|HDTV Researchers|4.71|
+
+
+***The result has 140 rows***
+
  - **Question 2: For all of these top 10 interests - which interest appears the most often?**
+
+```tsql
+
+with cte_rank_avg_composition as (select month_year,
+                                         interest_id,
+                                         avg_composition,
+                                         row_number () over (partition by month_year order by avg_composition desc) as rank_avg_composition
+                                  from ##new_interest_metrics me
+                                  where [month] is not null),
+
+     cte_rank_interest_appears as (select interest_id,
+                                          count (interest_id) as count_interest,
+                                          rank () over (order by count (interest_id) desc) as rank_interest_appears
+                                   from cte_rank_avg_composition
+                                   where rank_avg_composition <= 10
+                                   group by interest_id)
+
+select interest_name, count_interest
+from cte_rank_interest_appears cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where rank_interest_appears = 1;
+```
+
+|interest_name|count_interest|
+|---|---|
+|Luxury Bedding Shoppers|10|
+|Solar Energy Researchers|10|
+|Alabama Trip Planners|10|
+
+
  - **Question 3: What is the average of the average composition for the top 10 interests for each month?**
+
+
+```tsql
+with cte_rank_avg_composition as (select month_year,
+                                         interest_id,
+                                         avg_composition,
+                                         row_number () over (partition by month_year order by avg_composition desc) as rank_avg_composition
+                                  from ##new_interest_metrics me
+                                  where [month] is not null)
+
+select month_year,
+       round (avg (avg_composition),2) as avg_of_avg_composition
+from cte_rank_avg_composition cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id 
+where rank_avg_composition <= 10
+group by month_year
+order by month_year;
+```
+
+
+|month_year|avg_of_avg_composition|
+|---|---|
+|2018-07-01|6.04|
+|2018-08-01|5.94|
+|2018-09-01|6.89|
+|2018-10-01|7.07|
+|2018-11-01|6.62|
+|2018-12-01|6.65|
+|2019-01-01|6.4|
+|2019-02-01|6.58|
+|2019-03-01|6.17|
+|2019-04-01|5.75|
+|2019-05-01|3.54|
+|2019-06-01|2.43|
+|2019-07-01|2.76|
+|2019-08-01|2.63|
+
  - **Question 4: What is the 3 month rolling average of the max average composition value from September 2018 to August 2019 and include the previous top ranking interests in the same output shown below.**
    - **Required output for question 4:**
   

@@ -198,3 +198,69 @@ where max_percentile_ranking = 1 or min_percentile_ranking = 1
 order by cast (interest_name as varchar (50)), percentile_ranking desc;
 
 -- 5.How would you describe our customers in this segment based off their composition and ranking values? What sort of products or services should we show to these customers and what should we avoid?
+
+
+-- D.INDEX ANALYSIS
+-- The index_value is a measure which can be used to reverse calculate the average composition for Fresh Segments' clients. Average composition can be calculated by dividing the composition column by the index_value column rounded to 2 decimal places.
+select [month],
+       [year],
+       month_year,
+       interest_id,
+       composition,
+       round (composition / index_value, 2) as avg_composition,
+       index_value,
+       ranking,
+       percentile_ranking
+into ##new_interest_metrics
+from [fresh_segments.interest_metrics];
+
+-- 1.What is the top 10 interests by the average composition for each month?
+with cte_rank_avg_composition as (select month_year,
+                                         interest_id,
+                                         avg_composition,
+                                         row_number () over (partition by month_year order by avg_composition desc) as rank_avg_composition
+                                  from ##new_interest_metrics me
+                                  where [month] is not null)
+
+select month_year,
+       interest_name,
+       avg_composition
+from cte_rank_avg_composition cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where rank_avg_composition <= 10;
+
+-- 2.For all of these top 10 interests - which interest appears the most often?
+with cte_rank_avg_composition as (select month_year,
+                                         interest_id,
+                                         avg_composition,
+                                         row_number () over (partition by month_year order by avg_composition desc) as rank_avg_composition
+                                  from ##new_interest_metrics me
+                                  where [month] is not null),
+
+     cte_rank_interest_appears as (select interest_id,
+                                          count (interest_id) as count_interest,
+                                          rank () over (order by count (interest_id) desc) as rank_interest_appears
+                                   from cte_rank_avg_composition
+                                   where rank_avg_composition <= 10
+                                   group by interest_id)
+
+select interest_name, count_interest
+from cte_rank_interest_appears cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id
+where rank_interest_appears = 1;
+
+-- 3.What is the average of the average composition for the top 10 interests for each month?
+with cte_rank_avg_composition as (select month_year,
+                                         interest_id,
+                                         avg_composition,
+                                         row_number () over (partition by month_year order by avg_composition desc) as rank_avg_composition
+                                  from ##new_interest_metrics me
+                                  where [month] is not null)
+
+select month_year,
+       round (avg (avg_composition),2) as avg_of_avg_composition
+from cte_rank_avg_composition cte
+join [fresh_segments.interest_map] m on m.id = cte.interest_id 
+where rank_avg_composition <= 10
+group by month_year
+order by month_year;
