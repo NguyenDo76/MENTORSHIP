@@ -32,46 +32,30 @@ namespace Program
             //Dcount, Dsum, Dmax, Dmin, DAvg
             Console.WriteLine("----------------------------------------------------");
             Console.WriteLine("Dcount");
-            var groupedStudentsCount = Students
-            .GroupBy(s => s.BaseAge)
-            .Select(g => new { BaseAge = g.Key, StudentIDs = g.Select(s => s.StudentID).Distinct() });
-            foreach (var group in groupedStudentsCount)
+            var groupedStudents = Students
+             .GroupBy(s => s.BaseAge)
+             .Select(g => new { BaseAge = g.Key, StudentIDs = g.Select(s => s.StudentID).Distinct(), StudentAge = g.Select(s => s.Age) });
+            foreach (var group in groupedStudents)
             {
                 Console.WriteLine($"{group.BaseAge}: StudentID {{{string.Join(", ", group.StudentIDs)}}} ({group.StudentIDs.Count()} students)");
             }
-
             Console.WriteLine("Dmax");
-            var groupedStudentsMax = Students
-            .GroupBy(s => s.BaseAge)
-            .Select(g => new { BaseAge = g.Key, StudentIDs = g.Select(s => s.StudentID).Distinct(), StudentAge = g.Select(s => s.Age) });
-            foreach (var group in groupedStudentsMax)
+            foreach (var group in groupedStudents)
             {
                 Console.WriteLine($"{group.BaseAge}: StudentID {{{string.Join(", ", group.StudentIDs)}}} (The maximum age is: {group.StudentAge.Max()} year old)");
             }
-
             Console.WriteLine("Dmin");
-            var groupedStudentsMin = Students
-            .GroupBy(s => s.BaseAge)
-            .Select(g => new { BaseAge = g.Key, StudentIDs = g.Select(s => s.StudentID).Distinct(), StudentAge = g.Select(s => s.Age) });
-            foreach (var group in groupedStudentsMin)
+            foreach (var group in groupedStudents)
             {
                 Console.WriteLine($"{group.BaseAge}: StudentID {{{string.Join(", ", group.StudentIDs)}}} (The minimum age is: {group.StudentAge.Min()} year old)");
             }
-
             Console.WriteLine("Davg");
-            var groupedStudentsAvg = Students
-            .GroupBy(s => s.BaseAge)
-            .Select(g => new { BaseAge = g.Key, StudentIDs = g.Select(s => s.StudentID).Distinct(), StudentAge = g.Select(s => s.Age) });
-            foreach (var group in groupedStudentsAvg)
+            foreach (var group in groupedStudents)
             {
                 Console.WriteLine($"{group.BaseAge}: StudentID {{{string.Join(", ", group.StudentIDs)}}}: (The average age is: {group.StudentAge.Average()} year old)");
             }
-
             Console.WriteLine("Dsum");
-            var groupedStudentsSum = Students
-            .GroupBy(s => s.BaseAge)
-            .Select(g => new { BaseAge = g.Key, StudentIDs = g.Select(s => s.StudentID).Distinct(), StudentAge = g.Select(s => s.Age) });
-            foreach (var group in groupedStudentsSum)
+            foreach (var group in groupedStudents)
             {
                 Console.WriteLine($"{group.BaseAge}: StudentID {{{string.Join(", ", group.StudentIDs)}}}: (The sum age is: {group.StudentAge.Sum()} year old)");
             }
