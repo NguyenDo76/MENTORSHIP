@@ -88,8 +88,8 @@ namespace unittest
                     StudentID = $"{Student.StudentID}",
                     StudentName = $"{Student.StudentName}",
                     TeacherID = $"{Student.TeacherID}",
-                    //StudentAge = $"{Student.Age}",
-                    //StudentBaseAge = $"{Student.BaseAge}",
+                    StudentAge = $"{Student.StudentAge}",
+                    StudentBaseAge = $"{Student.StudentBaseAge}",
                     TeacherName = $"{Teacher.TeacherName}"
                 }).Distinct().ToList();
 

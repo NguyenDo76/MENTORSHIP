@@ -130,8 +130,8 @@ namespace Program
                     StudentID = $"{Student.StudentID}",
                     StudentName = $"{Student.StudentName}",
                     TeacherID = $"{Student.TeacherID}",
-                    StudentAge = $"{Student.Age}",
-                    StudentBaseAge = $"{Student.BaseAge}",
+                    StudentAge = $"{Student.StudentAge}",
+                    StudentBaseAge = $"{Student.StudentBaseAge}",
                     TeacherName = $"{Teacher.TeacherName}"
                 }).Distinct();
             foreach (var result in result_left_join_method)
