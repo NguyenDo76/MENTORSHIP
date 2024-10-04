@@ -1,0 +1,91 @@
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.AssemblyInfo.cs
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\appsettings.json
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.exe
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.deps.json
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.runtimeconfig.json
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.pdb
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\System.Data.SqlClient.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\win-arm64\native\sni.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\win-x64\native\sni.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets\msbuild.WebApplicationDaily.dev.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets\msbuild.build.WebApplicationDaily.dev.props
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.WebApplicationDaily.dev.props
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.WebApplicationDaily.dev.props
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\scopedcss\bundle\WebApplicationDaily.dev.styles.css
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebAppli.AB04ADCE.Up2Date
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\refint\WebApplicationDaily.dev.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.pdb
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.genruntimeconfig.cache
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\ref\WebApplicationDaily.dev.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Elasticsearch.Net.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Nest.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\System.IO.Packaging.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\System.ServiceModel.Syndication.dll
+C:\Users\Admin\source\repos\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\HtmlAgilityPack.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\appsettings.Development.json
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\appsettings.json
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.exe
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.deps.json
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.runtimeconfig.json
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\WebApplicationDaily.dev.pdb
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Elasticsearch.Net.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\HtmlAgilityPack.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Nest.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\System.Data.SqlClient.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\System.IO.Packaging.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\System.ServiceModel.Syndication.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\win-arm64\native\sni.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\win-x64\native\sni.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.csproj.AssemblyReference.cache
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.GeneratedMSBuildEditorConfig.editorconfig
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.AssemblyInfoInputs.cache
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.AssemblyInfo.cs
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.csproj.CoreCompileInputs.cache
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.MvcApplicationPartsAssemblyInfo.cs
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.MvcApplicationPartsAssemblyInfo.cache
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.sourcelink.json
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets.build.json
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets.development.json
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets\msbuild.WebApplicationDaily.dev.Microsoft.AspNetCore.StaticWebAssets.props
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets\msbuild.build.WebApplicationDaily.dev.props
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.WebApplicationDaily.dev.props
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.WebApplicationDaily.dev.props
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\staticwebassets.pack.json
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\scopedcss\bundle\WebApplicationDaily.dev.styles.css
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebAppli.AB04ADCE.Up2Date
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\refint\WebApplicationDaily.dev.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.pdb
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\WebApplicationDaily.dev.genruntimeconfig.cache
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\ref\WebApplicationDaily.dev.dll
