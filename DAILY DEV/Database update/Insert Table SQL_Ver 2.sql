@@ -1,5 +1,5 @@
 Drop table if exists News
-Create table News ( RSS_ID int,
+Create table News ( News_ID int,
                     Title text,
                     Description text,
                     Link nvarchar (50),
@@ -13,8 +13,8 @@ Create table News ( RSS_ID int,
 
 Drop table if exists [User]
 Create table [User] ( UserID int,
-                      UserName nvarchar (50),
-                      UserPassword nvarchar (50),
+                      UserName nvarchar (100),
+                      UserPassword nvarchar (100),
                       Email nvarchar (100),
                       JoinedDate datetime,
                       LastedSignOut datetime                 
