@@ -25,11 +25,16 @@ Create table Source ( SourceID int,
                       SourceName nvarchar (50),
                       URL nvarchar (100),                                  
                     )
+Insert into Source values 
+(1, 'Tuoi tre', 'https://tuoitre.vn/rss.htm'),
+(2, 'Thanh nien', 'https://thanhnien.vn/rss.html'),
+(3, 'Vietnamexpress', 'https://vnexpress.net/rss')
 
 Drop table if exists Categories
 Create table Categories ( CategoryID int,
                           CategoryName nvarchar (50),                                                      
                         )
+
 
 Drop table if exists Tags
 Create table Tags ( TagID int,
@@ -55,15 +60,16 @@ Create table UserCategory ( UserCategoryID int,
                           )
 
 Drop table if exists UserTags
-Create table UserCategory ( UserTagID int,
-                            UserID int,
-                            TagFlavorID int,
-                            CreatedDate datetime
+Create table UserTags ( UserTagID int,
+                        UserID int,
+                        TagFlavorID int,
+                        CreatedDate datetime
                           )
                           
 Drop table if exists NewsTags
-Create table UserCategory ( NewsTagID int,
-                            News_ID int,
-                            TagID int,
-                            CreatedDate datetime
+Create table NewsTags ( NewsTagID int,
+                        News_ID int,
+                        TagID int,
+                        CreatedDate datetime
                           )  
+

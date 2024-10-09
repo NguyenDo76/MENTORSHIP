@@ -20,13 +20,45 @@ namespace WebApplicationDaily.dev.Controllers
     [ApiController]
     public class RSSController : ControllerBase
     {
+        //[HttpGet]
+        //public IActionResult GetRssFeed()
+        //{
+        //    var rssItems = RssRefreshService.GetRssItems();
+        //    return Ok(rssItems);
+        //}
+        //
+
+        //private readonly ILogger<RSSController> _logger;
+        //private readonly RssRefreshService _rssRefreshService;
+
+        //public RSSController(ILogger<RSSController> logger, RssRefreshService rssRefreshService)
+        //{
+        //    _logger = logger;
+        //    _rssRefreshService = rssRefreshService;
+        //}
+
+        //[HttpGet]
+        //public IActionResult GetRssItems()
+        //{
+        //    var rssItems = _rssRefreshService.GetRssItems();
+        //    return Ok(rssItems);
+        //}
+
+        //[HttpGet("fetch")]
+        //public async Task<IActionResult> GetRssFeedDetail(string rssFeedUrl)
+        //{
+        //    var rssItems = await _rssRefreshService.FetchRssFeedAsync(rssFeedUrl);
+        //    return Ok(rssItems);
+        //}
+
+
         private static int _rssCounter = 1;
 
         [HttpGet]
-        public async Task<IActionResult> GetRssFeed(string rssFeedUrl)
-        {
 
-            var rssItems = new List<RSS>();
+        public async Task<IActionResult> GetRssFeedDetail(string rssFeedUrl)
+        {
+            var rssItems = new List<News>();
 
             try
             {
@@ -45,7 +77,7 @@ namespace WebApplicationDaily.dev.Controllers
 
                             foreach (var item in feed.Items)
                             {
-                                var rssItem = new RSS
+                                var rssItem = new News
                                 {
                                     News_ID = _rssCounter++,
                                     Title = item.Title.Text,
@@ -69,6 +101,7 @@ namespace WebApplicationDaily.dev.Controllers
 
             return Ok(rssItems);
         }
+
 
         private string ScrapeImageFromArticle(string articleUrl)
         {

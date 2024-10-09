@@ -91,3 +91,5 @@ D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicati
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\obj\Debug\net8.0\ref\WebApplicationDaily.dev.dll
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\AWSSDK.Core.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDaily.dev\WebApplicationDaily.dev\bin\Debug\net8.0\AWSSDK.DynamoDBv2.dll

@@ -1,0 +1,6 @@
+@WebApplicationDailydev_HostAddress = http://localhost:5205
+
+GET {{WebApplicationDailydev_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

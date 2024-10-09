@@ -1,17 +1,7 @@
 [
   {
-    "ContainingType": "WebApplicationDaily.dev.Controllers.Newsontroller2",
-    "Method": "GetRssFeed",
-    "RelativePath": "api/Newsontroller2",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "WebApplicationDaily.dev.Controllers.RSSController",
-    "Method": "GetRssFeed",
+    "Method": "GetRssFeedDetail",
     "RelativePath": "api/rss",
     "HttpMethod": "GET",
     "IsController": true,
