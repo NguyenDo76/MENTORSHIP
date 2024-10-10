@@ -39,20 +39,31 @@ namespace WebApplicationDailydev.Controllers
 
         // POST api/<SourceController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Add([FromBody] Source source)
         {
+            _sourceRepository.Add(source);
+            return CreatedAtAction(nameof(GetId), new { id = source.SourceID }, source);
         }
 
         // PUT api/<SourceController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Update(int id, [FromBody] Source source)
         {
+            source.SourceID = id;
+            if (source == null || id != source.SourceID)
+            {
+                return BadRequest("Invalid source data.");
+            }
+            _sourceRepository.Update(source);
+            return Ok(source);
         }
 
         // DELETE api/<SourceController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            _sourceRepository.Delete(id);
+            return NoContent();
         }
     }
 }

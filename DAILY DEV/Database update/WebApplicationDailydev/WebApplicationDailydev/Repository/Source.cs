@@ -6,26 +6,20 @@ namespace WebApplicationDailydev.Repository
 {
     public class SourceRepository
     {
-        private readonly string _connectionString;
-
-        public SourceRepository(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
+        string connectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=DailyDev;Integrated Security=True;Encrypt=True;TrustServerCertificate=true;";
+            
         public void Upsert(Source source)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                // Kiểm tra xem mục nhập đã tồn tại hay chưa
+            using (var connection = new SqlConnection(connectionString))
+            {                
                 connection.Open();
                 string sql = "Select count (SourceName) from Source where SourceName = @SourceName";
-                var command = connection.CreateCommand();
-                command.CommandText = sql;
-                command.ExecuteNonQuery();
+                var command = new SqlCommand (sql,connection);                
+                
                
                 command.Parameters.AddWithValue("@SourceName", source.SourceName);
                 
-                var count = (int) command.ExecuteScalar(); // ExecuteScalar() trả về giá trị đầu tiên của cột đầu tiên trong kết quả
+                var count = (int) command.ExecuteScalar();
 
                 if (count > 0)
                 {
@@ -35,22 +29,25 @@ namespace WebApplicationDailydev.Repository
                 {
                     Add(source);
                 }
+                command.ExecuteNonQuery();
+                connection.Close();
             }
         }
         public void Add(Source source)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                string sql = "INSERT INTO Source (SourceName, URL) VALUES (@SourceName, @URL)";
-                var command = connection.CreateCommand();
-                command.CommandText = sql;
-                command.ExecuteNonQuery();
+                string sql = "INSERT INTO Source (SourceID, SourceName, URL) VALUES (@SourceID, @SourceName, @URL)";
+                var command = new SqlCommand(sql, connection);
+                
 
+                command.Parameters.AddWithValue("@SourceID", source.SourceID);
                 command.Parameters.AddWithValue("@SourceName", source.SourceName);
                 command.Parameters.AddWithValue("@URL", source.URL);
-                
+
+                command.ExecuteNonQuery();
                 connection.Close();
             }
         }
@@ -58,14 +55,13 @@ namespace WebApplicationDailydev.Repository
         public IEnumerable<Source> GetAll()
         {
             var sources = new List<Source>();
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 
                 connection.Open();
 
                 string sql = "Select * from Source";
-                var command = connection.CreateCommand();
-                command.CommandText = sql;
+                var command = new SqlCommand(sql, connection);
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -85,7 +81,7 @@ namespace WebApplicationDailydev.Repository
 
         public Source GetId(int id)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 
                 connection.Open();
@@ -113,30 +109,33 @@ namespace WebApplicationDailydev.Repository
         public void Update(Source source)
         {
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 string sql = string.Format(@"Update Source set SourceName = @SourceName, URL = @URL where SourceID = @SourceID");
                 var command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
+                
                 
                 command.Parameters.AddWithValue("@SourceID", source.SourceID);
                 command.Parameters.AddWithValue("@SourceName", source.SourceName);
                 command.Parameters.AddWithValue("@URL", source.URL);
+                command.ExecuteNonQuery();
                 connection.Close();
             }
         }
 
         public void Delete(int id)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 string sql = string.Format(@"Delete from Source where SourceID = @SourceID");
                 var command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
+                
 
                 command.Parameters.AddWithValue("@SourceID", id);
+
+                command.ExecuteNonQuery();
                 connection.Close();
             }
         }
