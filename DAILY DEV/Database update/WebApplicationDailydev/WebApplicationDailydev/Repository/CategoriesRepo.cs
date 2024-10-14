@@ -37,10 +37,10 @@ namespace WebApplicationDailydev.Repository
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = "INSERT INTO Categories (CategoryName) VALUES (@CategoryName)";
+                string sql = "INSERT INTO Categories (CategoryID, CategoryName) VALUES (@CategoryID, @CategoryName)";
                 var command = new SqlCommand(sql, connection);
                 
-                
+                command.Parameters.AddWithValue("@CategoryID", categories.CategoryID);
                 command.Parameters.AddWithValue("@CategoryName", categories.CategoryName);
 
                 command.ExecuteNonQuery();
@@ -84,7 +84,7 @@ namespace WebApplicationDailydev.Repository
                 var command = new SqlCommand(sql, connection);
                 var reader = command.ExecuteReader();
 
-                command.Parameters.AddWithValue("@CategoryID", id);
+                command.Parameters.AddWithValue("@Id", id);
 
                 if (reader.Read())
                 {
