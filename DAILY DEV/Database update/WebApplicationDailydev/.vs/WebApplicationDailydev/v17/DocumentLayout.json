@@ -11,12 +11,36 @@
       "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\repository\\postrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\repository\\newsrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\repository\\newsrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\model\\sourcecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\model\\sourcecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\repository\\newstagsrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\repository\\newstagsrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\repository\\sourcerepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\repository\\sourcerepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\repository\\usercategoryrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\repository\\usercategoryrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\repository\\categoriesrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\repository\\categoriesrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\model\\source.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\model\\source.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,17 +50,95 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SourceCategory.cs",
+              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Model\\SourceCategory.cs",
+              "RelativeDocumentMoniker": "WebApplicationDailydev\\Model\\SourceCategory.cs",
+              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Model\\SourceCategory.cs",
+              "RelativeToolTip": "WebApplicationDailydev\\Model\\SourceCategory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T15:38:45.81Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NewsController.cs",
+              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Controllers\\NewsController.cs",
+              "RelativeDocumentMoniker": "WebApplicationDailydev\\Controllers\\NewsController.cs",
+              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Controllers\\NewsController.cs",
+              "RelativeToolTip": "WebApplicationDailydev\\Controllers\\NewsController.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAA0wDoAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T15:04:50.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CategoriesRepo.cs",
+              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\CategoriesRepo.cs",
+              "RelativeDocumentMoniker": "WebApplicationDailydev\\Repository\\CategoriesRepo.cs",
+              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\CategoriesRepo.cs",
+              "RelativeToolTip": "WebApplicationDailydev\\Repository\\CategoriesRepo.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAqwD4AAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T10:16:43.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SourceRepo.cs",
+              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\SourceRepo.cs",
+              "RelativeDocumentMoniker": "WebApplicationDailydev\\Repository\\SourceRepo.cs",
+              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\SourceRepo.cs",
+              "RelativeToolTip": "WebApplicationDailydev\\Repository\\SourceRepo.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAqwE0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T10:12:11.707Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Source.cs",
+              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Model\\Source.cs",
+              "RelativeDocumentMoniker": "WebApplicationDailydev\\Model\\Source.cs",
+              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Model\\Source.cs",
+              "RelativeToolTip": "WebApplicationDailydev\\Model\\Source.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T10:11:24.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "NewsRepo.cs",
+              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\NewsRepo.cs",
+              "RelativeDocumentMoniker": "WebApplicationDailydev\\Repository\\NewsRepo.cs",
+              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\NewsRepo.cs",
+              "RelativeToolTip": "WebApplicationDailydev\\Repository\\NewsRepo.cs",
+              "ViewState": "AgIAAO8AAAAAAAAAAAAgwB8BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-15T07:32:02.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "NewsTagsRepo.cs",
               "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\NewsTagsRepo.cs",
               "RelativeDocumentMoniker": "WebApplicationDailydev\\Repository\\NewsTagsRepo.cs",
               "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\NewsTagsRepo.cs",
               "RelativeToolTip": "WebApplicationDailydev\\Repository\\NewsTagsRepo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGIAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwBgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-14T11:38:37.028Z",
               "EditorCaption": ""
@@ -49,14 +151,14 @@
               "RelativeDocumentMoniker": "WebApplicationDailydev\\Repository\\UserTagsRepo.cs",
               "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\UserTagsRepo.cs",
               "RelativeToolTip": "WebApplicationDailydev\\Repository\\UserTagsRepo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF8AAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-14T11:30:57.342Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "UserCategoryRepo.cs",
               "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\UserCategoryRepo.cs",
               "RelativeDocumentMoniker": "WebApplicationDailydev\\Repository\\UserCategoryRepo.cs",

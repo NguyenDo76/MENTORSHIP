@@ -10,8 +10,7 @@
         public DateTime PubDate { get; set; }        
         public DateTime UpdatedDate { get; set; }
         public string ImageURL {  get; set; }
-        public int SourceID { get; set; }
-        public int CategoryID { get; set; }
+        public int SourceCategoriesID { get; set; }        
 
     }
 }

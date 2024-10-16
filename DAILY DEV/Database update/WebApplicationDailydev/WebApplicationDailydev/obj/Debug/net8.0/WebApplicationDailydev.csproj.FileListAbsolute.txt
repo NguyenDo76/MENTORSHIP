@@ -75,3 +75,10 @@ D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicatio
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\obj\Debug\net8.0\WebApplicationDailydev.pdb
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\obj\Debug\net8.0\WebApplicationDailydev.genruntimeconfig.cache
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\obj\Debug\net8.0\ref\WebApplicationDailydev.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\Azure.Core.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\HtmlAgilityPack.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\System.ClientModel.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\System.Memory.Data.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\Polly.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\Polly.Core.dll

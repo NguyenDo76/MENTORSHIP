@@ -20,7 +20,7 @@ namespace WebApplicationDailydev.Controllers
 
         // GET: api/<CategoriesController>
         [HttpGet(Name = "Categories")]
-        public ActionResult<IEnumerable<Categories>> GetAll()
+        public ActionResult<IEnumerable<Categories>> GetAll2()
         {
             return Ok(_categoriesRepository.GetAll());
         }

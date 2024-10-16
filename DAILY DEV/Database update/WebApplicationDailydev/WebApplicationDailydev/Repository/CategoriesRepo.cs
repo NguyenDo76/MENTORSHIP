@@ -1,6 +1,10 @@
 ﻿using WebApplicationDailydev.Model;
 using System;
 using System.Data.SqlClient;
+using HtmlAgilityPack;
+using System.Net.Http;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace WebApplicationDailydev.Repository
 {
@@ -72,7 +76,7 @@ namespace WebApplicationDailydev.Repository
             return categories;
 
         }
-
+       
         public Categories GetId(int id)
         {
             using (var connection = new SqlConnection(connectionString))

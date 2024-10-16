@@ -14,7 +14,9 @@ namespace WebApplicationDailydev.Repository
             using (var connection = new SqlConnection(connectionString))
             {                
                 connection.Open();
-                string sql = "Select count (SourceName) from Source where SourceName = @SourceName";
+                string sql = string.Format(@"Select count (SourceName)
+                                             from Source
+                                             where SourceName = @SourceName");
                 var command = new SqlCommand (sql,connection);                
                 
                
@@ -40,12 +42,13 @@ namespace WebApplicationDailydev.Repository
             {
                 connection.Open();
 
-                string sql = "INSERT INTO Source (SourceName, URL) VALUES (@SourceName, @URL)";
+                string sql = "INSERT INTO Source (SourceName, URL, URLViewSource) VALUES (@SourceName, @URL, @URLViewSource)";
                 var command = new SqlCommand(sql, connection);
                 
                
                 command.Parameters.AddWithValue("@SourceName", source.SourceName);
                 command.Parameters.AddWithValue("@URL", source.URL);
+                command.Parameters.AddWithValue("@URLViewSource", source.URLViewSource);
 
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -71,6 +74,7 @@ namespace WebApplicationDailydev.Repository
                         SourceID = int.Parse(reader["SourceID"] + ""),
                         SourceName = reader["SourceName"] + "",
                         URL = reader["URL"] + "",
+                        URLViewSource = reader["URLViewSource"] + "",
                     });
                 }
                 connection.Close();
@@ -99,6 +103,7 @@ namespace WebApplicationDailydev.Repository
                             SourceID = int.Parse(reader["SourceID"] + ""),
                             SourceName = reader["SourceName"] + "",
                             URL = reader["URL"] + "",
+                            URLViewSource = reader["@URLViewSource"] + "",
                         };
                     }
                 connection.Close();
@@ -112,13 +117,17 @@ namespace WebApplicationDailydev.Repository
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = string.Format(@"Update Source set SourceName = @SourceName, URL = @URL where SourceID = @SourceID");
+                string sql = string.Format(@"Update Source set SourceName = @SourceName,
+                                                               URL = @URL,
+                                                               URLViewSource = @URLViewSource
+                                                         where SourceID = @SourceID");
                 var command = new SqlCommand(sql, connection);
                 
                 
                 command.Parameters.AddWithValue("@SourceID", source.SourceID);
                 command.Parameters.AddWithValue("@SourceName", source.SourceName);
                 command.Parameters.AddWithValue("@URL", source.URL);
+                command.Parameters.AddWithValue("@URLViewSource", source.URLViewSource);
                 command.ExecuteNonQuery();
                 connection.Close();
             }

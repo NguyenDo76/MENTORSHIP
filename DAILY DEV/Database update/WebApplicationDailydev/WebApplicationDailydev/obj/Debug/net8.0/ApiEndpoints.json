@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "WebApplicationDailydev.Controllers.CategoriesController",
-    "Method": "GetAll",
+    "Method": "GetAll2",
     "RelativePath": "api/Categories",
     "HttpMethod": "GET",
     "IsController": true,
@@ -198,6 +198,16 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "WebApplicationDailydev.Controllers.NewsController",
+    "Method": "FetchAndSaveNews",
+    "RelativePath": "api/News/fetch-and-save",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "WebApplicationDailydev.Controllers.SourceController",
