@@ -1,6 +1,8 @@
 using WebApplicationDailydev.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 
 // Add services to the container.
 
@@ -11,7 +13,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<SourceRepository>();
 builder.Services.AddScoped<CategoriesRepository>();
-builder.Services.AddScoped<NewsRepository>();
+//builder.Services.AddScoped<NewsRepository>();
+builder.Services.AddScoped<NewsRepository>(provider => new NewsRepository(connectionString));
+builder.Services.AddControllers();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

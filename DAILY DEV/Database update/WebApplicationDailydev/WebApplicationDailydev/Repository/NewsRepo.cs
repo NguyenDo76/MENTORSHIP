@@ -199,119 +199,134 @@ namespace WebApplicationDailydev.Repository
                 connection.Close();
             }
         }
+    
+        private readonly string _connectionString;
+        private readonly HttpClient _httpClient;
 
-        //----------------------------------------------------
-
-        public async Task<List<string>> GetAllLinkRSSAsync()
+        public NewsRepository(string connectionString)
         {
-            var linkRSSList = new List<string>();
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            _connectionString = connectionString;
+            _httpClient = new HttpClient();
+        }
+        public async Task<List<SourceCategory>> GetAllLinkRSSAndSourceCategoriesAsync()
+        {
+            var sourceCategoriesList = new List<SourceCategory>();
+            using (var connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT LinkRSS FROM SourceCategories";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                conn.Open();
-                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                await connection.OpenAsync();
+                string query = "SELECT SourceCategoriesID, LinkRSS FROM SourceCategories";
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
-                        linkRSSList.Add(reader.GetString(0));
+                        sourceCategoriesList.Add(new SourceCategory
+                        {
+                            SourceCategoriesID = reader.GetInt32(0),
+                            LinkRSS = reader.GetString(1)
+                        });
                     }
                 }
             }
-            return linkRSSList;
+            return sourceCategoriesList;
         }
 
-        // Thêm dữ liệu vào bảng News
-        public async Task AddNewsAsync(News news)
+        public async Task<string> FetchRSSFeedAsync(string rssUrl)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                string query = @"INSERT INTO News (Title, Description, Link, Guid, PubDate, UpdatedDate, ImageURL, SourceCategoriesID)
-                             VALUES (@Title, @Description, @Link, @Guid, @PubDate, @UpdatedDate, @ImageURL, @SourceCategoriesID)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Title", news.Title);
-                cmd.Parameters.AddWithValue("@Description", news.Description);
-                cmd.Parameters.AddWithValue("@Link", news.Link);
-                cmd.Parameters.AddWithValue("@Guid", news.Guid);
-                cmd.Parameters.AddWithValue("@PubDate", news.PubDate);
-                cmd.Parameters.AddWithValue("@UpdatedDate", DateTime.Now); // Cập nhật ngày hiện tại
-                cmd.Parameters.AddWithValue("@ImageURL", news.ImageURL);
-                cmd.Parameters.AddWithValue("@SourceCategoriesID", news.SourceCategoriesID);
+            //return await _httpClient.GetStringAsync(rssUrl);
+            var request = new HttpRequestMessage(HttpMethod.Get, rssUrl);
+            request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
 
-                conn.Open();
-                await cmd.ExecuteNonQueryAsync();
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Failed to fetch RSS feed from {rssUrl}: {response.StatusCode}");
+                return null;
             }
+
+            return await response.Content.ReadAsStringAsync();
         }
 
-        // Phân tích dữ liệu từ RSS feed
-        public async Task<List<News>> FetchRSSDataAsync(string rssUrl, int sourceCategoriesID)
+        public List<News> ProcessRSSData(string rssFeedContent, int sourceCategoriesID)
         {
             var newsList = new List<News>();
-            using (HttpClient client = new HttpClient())
+            var rssXml = XDocument.Parse(rssFeedContent);
+
+            foreach (var item in rssXml.Descendants("item"))
             {
-                var response = await client.GetStringAsync(rssUrl);
-                var rssXml = XDocument.Parse(response);
+                var pubDateString = item.Element("pubDate")?.Value;
+                DateTime pubDate;
 
-                foreach (var item in rssXml.Descendants("item"))
+                // Sử dụng DateTime.ParseExact để xử lý định dạng ngày
+                string[] formats = { "ddd, dd MMM yyyy HH:mm:ss 'GMT'K", "r", "ddd, dd MMM yyyy HH:mm:ss zzz" };
+                if (DateTime.TryParseExact(pubDateString, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal, out pubDate))
                 {
-                    var pubDateString = item.Element("pubDate")?.Value;
-                    DateTime pubDate;
+                    var title = item.Element("title")?.Value;
+                    var description = item.Element("description")?.Value;
+                    var link = item.Element("link")?.Value;
+                    var guid = item.Element("guid")?.Value;
 
-                    // Sử dụng DateTime.ParseExact để chuyển đổi định dạng ngày tháng
-                    string[] formats = { "ddd, dd MMM yyyy HH:mm:ss 'GMT'K", "r", "ddd, dd MMM yyyy HH:mm:ss zzz" };
-                    if (DateTime.TryParseExact(pubDateString, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal, out pubDate))
+                    // Kiểm tra nếu sử dụng media:content hoặc media:thumbnail cho hình ảnh
+                    var imageUrl = item.Element("enclosure")?.Attribute("url")?.Value
+                                ?? item.Element("{http://search.yahoo.com/mrss/}thumbnail")?.Attribute("url")?.Value
+                                ?? item.Element("{http://search.yahoo.com/mrss/}content")?.Attribute("url")?.Value;
+
+                    var news = new News
                     {
-                        var news = new News
-                        {
-                            Title = item.Element("title")?.Value,
-                            Description = item.Element("description")?.Value,
-                            Link = item.Element("link")?.Value,
-                            Guid = item.Element("guid")?.Value,
-                            PubDate = pubDate,
-                            ImageURL = item.Element("enclosure")?.Attribute("url")?.Value, // nếu RSS có image
-                            SourceCategoriesID = sourceCategoriesID
-                        };
-                        newsList.Add(news);
-                    }
-                    else
-                    {
-                        // Handle error when parsing date
-                        Console.WriteLine($"Unable to parse pubDate: {pubDateString}");
-                    }
+                        Title = title,
+                        Description = description,
+                        Link = link,
+                        Guid = guid,
+                        PubDate = pubDate,
+                        ImageURL = imageUrl,
+                        SourceCategoriesID = sourceCategoriesID
+                    };
+                    newsList.Add(news);
                 }
             }
             return newsList;
         }
-        
-            private readonly HttpClient _httpClient;
-            private readonly IAsyncPolicy<HttpResponseMessage> _retryPolicy;
 
-            public NewsRepository()
+        // Chỉ thêm các news với GUID không trùng lặp
+        public async Task AddUniqueNewsAsync(List<News> newsItems)
+        {
+            using (var connection = new SqlConnection(_connectionString))
             {
-                _httpClient = new HttpClient();
+                await connection.OpenAsync();
 
-                // Cấu hình Polly để retry 3 lần khi có lỗi
-                _retryPolicy = Policy
-                    .HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
-                    .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-                        onRetry: (response, timespan, retryCount, context) =>
-                        {
-                            Console.WriteLine($"Request failed. Waiting {timespan} before next retry. Retry attempt {retryCount}");
-                        });
-            }
-
-            public async Task<string> FetchRSSFeedAsync(string rssUrl)
-            {
-                // Sử dụng retry policy cho HTTP request
-                HttpResponseMessage response = await _retryPolicy.ExecuteAsync(() => _httpClient.GetAsync(rssUrl));
-
-                if (!response.IsSuccessStatusCode)
+                foreach (var news in newsItems)
                 {
-                    throw new HttpRequestException($"Failed to fetch RSS feed. Status code: {response.StatusCode}");
-                }
+                    // Kiểm tra nếu GUID đã tồn tại
+                    string checkGuidQuery = "SELECT COUNT(1) FROM News WHERE Guid = @Guid";
+                    using (var checkCommand = new SqlCommand(checkGuidQuery, connection))
+                    {
+                        checkCommand.Parameters.AddWithValue("@Guid", news.Guid);
+                        var count = (int)await checkCommand.ExecuteScalarAsync();
 
-                return await response.Content.ReadAsStringAsync();
+                        // Nếu GUID không tồn tại, chèn dữ liệu mới
+                        if (count == 0)
+                        {
+                            string insertQuery = @"INSERT INTO News (Title, Description, Link, Guid, PubDate, UpdatedDate, ImageURL, SourceCategoriesID) 
+                                               VALUES (@Title, @Description, @Link, @Guid, @PubDate, @UpdatedDate, @ImageURL, @SourceCategoriesID)";
+                            using (var insertCommand = new SqlCommand(insertQuery, connection))
+                            {
+                                insertCommand.Parameters.AddWithValue("@Title", news.Title);
+                                insertCommand.Parameters.AddWithValue("@Description", news.Description);
+                                insertCommand.Parameters.AddWithValue("@Link", news.Link);
+                                insertCommand.Parameters.AddWithValue("@Guid", news.Guid);
+                                insertCommand.Parameters.AddWithValue("@PubDate", news.PubDate);
+                                insertCommand.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
+                                insertCommand.Parameters.AddWithValue("@ImageURL", (object)news.ImageURL ?? DBNull.Value);
+                                insertCommand.Parameters.AddWithValue("@SourceCategoriesID", news.SourceCategoriesID);
+
+                                await insertCommand.ExecuteNonQueryAsync();
+                            }
+                        }
+                    }
+                }
             }
-        
+        }
+
     }
 }

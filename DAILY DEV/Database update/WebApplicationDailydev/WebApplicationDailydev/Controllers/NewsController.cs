@@ -71,30 +71,31 @@ namespace WebApplicationDailydev.Controllers
             _newsRepository.Delete(id);
             return NoContent();
         }
-
-        ///-----------------------------------------------------------
+      
         [HttpPost("fetch-and-save")]
         public async Task<IActionResult> FetchAndSaveNews()
         {
-            // Lấy danh sách LinkRSS từ bảng SourceCategories
-            var linkRSSList = await _newsRepository.GetAllLinkRSSAsync();
+            // Lấy danh sách LinkRSS và SourceCategoriesID từ bảng SourceCategories
+            var sourceCategoriesList = await _newsRepository.GetAllLinkRSSAndSourceCategoriesAsync();
 
-            foreach (var linkRSS in linkRSSList)
+            foreach (var sourceCategory in sourceCategoriesList)
             {
-                // Giả sử bạn có thể lấy SourceCategoriesID từ link RSS (tùy chỉnh cách bạn quản lý ID này)
-                int sourceCategoriesID = 8; // Thay bằng logic thực tế
+                // Lấy từng LinkRSS và SourceCategoriesID
+                string linkRSS = sourceCategory.LinkRSS;
+                int sourceCategoriesID = sourceCategory.SourceCategoriesID;
 
-                // Lấy dữ liệu RSS
-                var newsList = await _newsRepository.FetchRSSDataAsync(linkRSS, sourceCategoriesID);
+                // Gọi repository để fetch RSS feed từ mỗi LinkRSS
+                var rssFeedContent = await _newsRepository.FetchRSSFeedAsync(linkRSS);
 
-                // Lưu vào bảng News
-                foreach (var news in newsList)
-                {
-                    await _newsRepository.AddNewsAsync(news);
-                }
+                // Xử lý dữ liệu từ RSS feed và lưu vào database
+                var newsItems = _newsRepository.ProcessRSSData(rssFeedContent, sourceCategoriesID);
+
+                // Chỉ thêm các tin tức có GUID không trùng lặp
+                await _newsRepository.AddUniqueNewsAsync(newsItems);
             }
 
             return Ok("RSS News fetched and saved successfully.");
-        }               
+        }
+
     }
 }

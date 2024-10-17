@@ -28,7 +28,8 @@ Create table Source ( SourceID int identity (1,1) primary key,
 Insert into Source values 
 ('Tuoi tre', 'https://tuoitre.vn/rss.htm','view-source:https://tuoitre.vn/rss.htm'),
 ('Thanh nien', 'https://thanhnien.vn/rss.html','view-source:https://thanhnien.vn/rss.html'),
-('Vietnamexpress', 'https://vnexpress.net/rss','view-source:https://vnexpress.net/rss');
+('Vietnamexpress', 'https://vnexpress.net/rss','view-source:https://vnexpress.net/rss'),
+('Kenh14', 'https://kenh14.vn/index.rss','view-source:https://kenh14.vn/index.rss');
 
 Drop table if exists Categories
 Create table Categories ( CategoryID int identity (1,1) primary key,
@@ -85,6 +86,7 @@ Insert into SourceCategories values
 (2, 1, 'https://thanhnien.vn/rss/the-thao.rss'),
 (2, 2, 'https://thanhnien.vn/rss/giai-tri.rss'),
 (2, 3, 'https://thanhnien.vn/rss/van-hoa.rss'),
+(4, 1, 'https://kenh14.vn/sport.rss'),
 (3, 1, 'https://vnexpress.net/rss/the-thao.rss'),
 (3, 2, 'https://vnexpress.net/rss/giai-tri.rss');
                          
