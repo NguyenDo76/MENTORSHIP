@@ -9,23 +9,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\AppData\\Local\\Temp\\xlbugqij..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\AppData\\Local\\Temp\\xlbugqij..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\AppData\\Local\\Temp\\xlbugqij..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|ResultFrame"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,44 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SQLQuery1.sql ",
-              "DocumentMoniker": "C:\\Users\\Admin\\AppData\\Local\\Temp\\xlbugqij..sql",
-              "ToolTip": "SQLQuery1.sql *",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-10-17T16:33:39.256Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\appsettings.json",
-              "RelativeDocumentMoniker": "WebApplicationDailydev\\appsettings.json",
-              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\appsettings.json",
-              "RelativeToolTip": "WebApplicationDailydev\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-10-17T15:55:29.796Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Program.cs",
-              "RelativeDocumentMoniker": "WebApplicationDailydev\\Program.cs",
-              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Program.cs",
-              "RelativeToolTip": "WebApplicationDailydev\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-17T15:53:22.459Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -81,7 +28,7 @@
               "RelativeDocumentMoniker": "WebApplicationDailydev\\Controllers\\NewsController.cs",
               "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Controllers\\NewsController.cs",
               "RelativeToolTip": "WebApplicationDailydev\\Controllers\\NewsController.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAnwGYAAABTAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAIAwwEIAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-16T15:04:50.957Z",
               "EditorCaption": ""
@@ -94,7 +41,7 @@
               "RelativeDocumentMoniker": "WebApplicationDailydev\\Repository\\NewsRepo.cs",
               "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\NewsRepo.cs",
               "RelativeToolTip": "WebApplicationDailydev\\Repository\\NewsRepo.cs",
-              "ViewState": "AgIAAL0BAAAAAAAAAAAiwOQBAAANAAAAAAAAAA==",
+              "ViewState": "AgIAABMBAAAAAAAAAAAQwCMBAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-15T07:32:02.148Z",
               "EditorCaption": ""

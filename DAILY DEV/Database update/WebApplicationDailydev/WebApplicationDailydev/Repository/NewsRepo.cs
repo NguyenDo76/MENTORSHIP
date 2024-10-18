@@ -23,6 +23,7 @@ using Polly.Retry;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
 
 
 namespace WebApplicationDailydev.Repository
@@ -245,7 +246,13 @@ namespace WebApplicationDailydev.Repository
                 return null;
             }
 
-            return await response.Content.ReadAsStringAsync();
+            //return await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync();
+
+            // Log nội dung RSS nhận được
+            Console.WriteLine($"RSS content from {rssUrl}: {content}");
+
+            return content;
         }
 
         public List<News> ProcessRSSData(string rssFeedContent, int sourceCategoriesID)
@@ -255,38 +262,57 @@ namespace WebApplicationDailydev.Repository
 
             foreach (var item in rssXml.Descendants("item"))
             {
-                var pubDateString = item.Element("pubDate")?.Value;
-                DateTime pubDate;
-
-                // Sử dụng DateTime.ParseExact để xử lý định dạng ngày
-                string[] formats = { "ddd, dd MMM yyyy HH:mm:ss 'GMT'K", "r", "ddd, dd MMM yyyy HH:mm:ss zzz" };
-                if (DateTime.TryParseExact(pubDateString, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal, out pubDate))
+                try
                 {
-                    var title = item.Element("title")?.Value;
-                    var description = item.Element("description")?.Value;
-                    var link = item.Element("link")?.Value;
-                    var guid = item.Element("guid")?.Value;
+                    var pubDateString = item.Element("pubDate")?.Value
+                                 ?? item.Element("{http://purl.org/dc/elements/1.1/}date")?.Value;
+                    DateTime pubDate;
 
-                    // Kiểm tra nếu sử dụng media:content hoặc media:thumbnail cho hình ảnh
-                    var imageUrl = item.Element("enclosure")?.Attribute("url")?.Value
-                                ?? item.Element("{http://search.yahoo.com/mrss/}thumbnail")?.Attribute("url")?.Value
-                                ?? item.Element("{http://search.yahoo.com/mrss/}content")?.Attribute("url")?.Value;
-
-                    var news = new News
+                    // Sử dụng DateTime.ParseExact để xử lý định dạng ngày
+                    string[] formats = { "ddd, dd MMM yyyy HH:mm:ss 'GMT'K", "r", "ddd, dd MMM yyyy HH:mm:ss zzz" };
+                    if (DateTime.TryParseExact(pubDateString, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal, out pubDate))
                     {
-                        Title = title,
-                        Description = description,
-                        Link = link,
-                        Guid = guid,
-                        PubDate = pubDate,
-                        ImageURL = imageUrl,
-                        SourceCategoriesID = sourceCategoriesID
-                    };
-                    newsList.Add(news);
+                        var title = item.Element("title")?.Value;
+                        var description = item.Element("description")?.Value;
+                        var link = item.Element("link")?.Value;
+                        var guid = item.Element("guid")?.Value;
+
+                        //Kiểm tra nếu sử dụng media:content hoặc media: thumbnail cho hình ảnh
+                        var imageUrl = item.Element("enclosure")?.Attribute("url")?.Value
+                                    ?? item.Element("{http://search.yahoo.com/mrss/}thumbnail")?.Attribute("url")?.Value
+                                    ?? item.Element("{http://search.yahoo.com/mrss/}content")?.Attribute("url")?.Value
+                                    ?? item.Element("{http://purl.org/rss/1.0/modules/content/}encoded")?.Value;
+
+
+
+                        var news = new News
+                        {
+                            Title = title,
+                            Description = description,
+                            Link = link,
+                            Guid = guid,
+                            PubDate = pubDate,
+                            ImageURL = imageUrl,
+                            SourceCategoriesID = sourceCategoriesID
+                        };
+                        newsList.Add(news);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Lỗi khi parse pubDate: {pubDateString}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error processing item: {ex.Message}");
                 }
             }
             return newsList;
         }
+        //------------------------------
+
+
+        //------------------------------
 
         // Chỉ thêm các news với GUID không trùng lặp
         public async Task AddUniqueNewsAsync(List<News> newsItems)
