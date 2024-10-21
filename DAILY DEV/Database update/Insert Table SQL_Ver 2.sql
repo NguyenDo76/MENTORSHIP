@@ -12,18 +12,18 @@ Create table News ( News_ID int identity (1,1) primary key,
 
 Drop table if exists [User]
 Create table [User] ( UserID int identity (1,1) primary key,
-                      UserName nvarchar (100),
-                      UserPassword nvarchar (100),
-                      Email nvarchar (100),
+                      UserName nvarchar (255),
+                      UserPassword nvarchar (255),
+                      Email nvarchar (255),
                       JoinedDate datetime,
                       LastedSignOut datetime                 
                     );
 
 Drop table if exists Source
 Create table Source ( SourceID int identity (1,1) primary key,
-                      SourceName nvarchar (50),
-                      URL nvarchar (100),
-                      URLViewSource nvarchar (500),                                  
+                      SourceName nvarchar (255),
+                      URL nvarchar (255),
+                      URLViewSource nvarchar (255),                                  
                     )
 Insert into Source values 
 ('Tuoi tre', 'https://tuoitre.vn/rss.htm','view-source:https://tuoitre.vn/rss.htm'),
@@ -33,12 +33,12 @@ Insert into Source values
 
 Drop table if exists Categories
 Create table Categories ( CategoryID int identity (1,1) primary key,
-                          CategoryName nvarchar (50),                                                      
+                          CategoryName nvarchar (255),                                                      
                         )
 
 Drop table if exists Tags
 Create table Tags ( TagID int identity (1,1) primary key,
-                    TagName nvarchar (100),                                                      
+                    TagName nvarchar (255),                                                      
                   );
 
 Drop table if exists Post
@@ -77,7 +77,7 @@ Drop table if exists SourceCategories
 Create table SourceCategories ( SourceCategoriesID int identity (1,1) primary key,
                                 SourceID int,
                                 CategoryID int,
-                                LinkRSS nvarchar(100)
+                                LinkRSS nvarchar(255)
                               );
 Insert into SourceCategories values
 (1, 1, 'https://tuoitre.vn/rss/the-thao.rss'),

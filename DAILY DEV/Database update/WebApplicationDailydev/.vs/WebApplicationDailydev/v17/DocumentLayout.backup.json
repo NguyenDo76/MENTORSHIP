@@ -9,6 +9,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|d:\\git mentorship\\daily dev\\database update\\webapplicationdailydev\\webapplicationdailydev\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{421A1613-5A31-43D9-BA84-2E2BD58ECA9A}|WebApplicationDailydev\\WebApplicationDailydev.csproj|solutionrelative:webapplicationdailydev\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +22,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Program.cs",
+              "RelativeDocumentMoniker": "WebApplicationDailydev\\Program.cs",
+              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Program.cs",
+              "RelativeToolTip": "WebApplicationDailydev\\Program.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAEsAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T14:30:14.112Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -28,7 +45,7 @@
               "RelativeDocumentMoniker": "WebApplicationDailydev\\Controllers\\NewsController.cs",
               "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Controllers\\NewsController.cs",
               "RelativeToolTip": "WebApplicationDailydev\\Controllers\\NewsController.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAIAwwEIAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-16T15:04:50.957Z",
               "EditorCaption": ""
@@ -39,9 +56,9 @@
               "Title": "NewsRepo.cs",
               "DocumentMoniker": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\NewsRepo.cs",
               "RelativeDocumentMoniker": "WebApplicationDailydev\\Repository\\NewsRepo.cs",
-              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\NewsRepo.cs",
-              "RelativeToolTip": "WebApplicationDailydev\\Repository\\NewsRepo.cs",
-              "ViewState": "AgIAABMBAAAAAAAAAAAQwCMBAAAoAAAAAAAAAA==",
+              "ToolTip": "D:\\GIT MENTORSHIP\\DAILY DEV\\Database update\\WebApplicationDailydev\\WebApplicationDailydev\\Repository\\NewsRepo.cs*",
+              "RelativeToolTip": "WebApplicationDailydev\\Repository\\NewsRepo.cs*",
+              "ViewState": "AgIAAH4BAAAAAAAAAAAcwJEBAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-15T07:32:02.148Z",
               "EditorCaption": ""

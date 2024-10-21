@@ -201,9 +201,9 @@
   },
   {
     "ContainingType": "WebApplicationDailydev.Controllers.NewsController",
-    "Method": "FetchAndSaveNews",
-    "RelativePath": "api/News/fetch-and-save",
-    "HttpMethod": "POST",
+    "Method": "FetchRssFeeds",
+    "RelativePath": "api/News/fetch-rss",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],

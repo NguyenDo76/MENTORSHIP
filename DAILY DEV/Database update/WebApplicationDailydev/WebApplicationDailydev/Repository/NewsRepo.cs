@@ -1,29 +1,16 @@
 ﻿using WebApplicationDailydev.Model;
-using System;
-using System.Data.SqlClient;
-using System.Xml;
-
-using System.Collections.Generic;
-using System.Net.Http;
-using System.ServiceModel.Syndication;
-
-
-using Microsoft.AspNetCore.Mvc;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using System.Data;
 using System.Xml.Linq;
-
-using Polly;
-using Polly.Retry;
-using System;
-using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Data.SqlClient;
+using Quartz;
+using System.Threading;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
+using WebApplicationDailydev.Repository;
+using Quartz.Spi;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 
 
 namespace WebApplicationDailydev.Repository
@@ -40,7 +27,7 @@ namespace WebApplicationDailydev.Repository
             {
                 connection.Open();
 
-                string sql = string.Format(@"INSERT INTO News Title, Description, Guid, Link, PubDate, UpdatedDate, ImageURL, SourceCategoriesID) 
+                string sql = string.Format(@"INSERT INTO News (Title, Description, Guid, Link, PubDate, UpdatedDate, ImageURL, SourceCategoriesID) 
                                                   VALUES (@Title, @Description, @Guid, @Link, @PubDate, @UpdatedDate, @ImageURL, @SourceCategoriesID)");
                 var command = new SqlCommand(sql, connection);
 
@@ -140,7 +127,7 @@ namespace WebApplicationDailydev.Repository
                                                              PubDate = @PubDate,
                                                              UpdatedDate = @UpdatedDate,
                                                              ImageURL = @ImageURL,
-                                                             SourceCategoriesID = @SourceCategoriesID,
+                                                             SourceCategoriesID = @SourceCategoriesID
                                                              where News_ID = @News_ID");
                 var command = new SqlCommand(sql, connection);
 
@@ -180,7 +167,7 @@ namespace WebApplicationDailydev.Repository
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = "Select count (Guid) from Source where Guid = @Guid";
+                string sql = "Select count(*) from News where Guid = @Guid";
                 var command = new SqlCommand(sql, connection);
 
 
@@ -200,159 +187,286 @@ namespace WebApplicationDailydev.Repository
                 connection.Close();
             }
         }
-    
+
         private readonly string _connectionString;
         private readonly HttpClient _httpClient;
 
-        public NewsRepository(string connectionString)
+        public NewsRepository(string connectionString, HttpClient httpClient)
         {
             _connectionString = connectionString;
             _httpClient = new HttpClient();
         }
-        public async Task<List<SourceCategory>> GetAllLinkRSSAndSourceCategoriesAsync()
+        //private readonly IHttpClientFactory _httpClientFactory;
+
+        //public NewsRepository(string connectionString, IHttpClientFactory httpClientFactory)
+        //{
+        //    _connectionString = connectionString;
+        //    _httpClientFactory = httpClientFactory;
+        //}
+
+        public async Task FetchAndSaveNewsFromRSSAsync(CancellationToken cancellationToken)
         {
-            var sourceCategoriesList = new List<SourceCategory>();
-            using (var connection = new SqlConnection(connectionString))
+            var sourceCategories = await GetAllSourceCategoriesAsync(cancellationToken);
+
+            int batchSize = 5; // Kích thước batch
+
+            for (int i = 0; i < sourceCategories.Count(); i += batchSize)
             {
-                await connection.OpenAsync();
-                string query = "SELECT SourceCategoriesID, LinkRSS FROM SourceCategories";
-                using (var command = new SqlCommand(query, connection))
-                using (var reader = await command.ExecuteReaderAsync())
+                var batchCategories = sourceCategories.Skip(i).Take(batchSize);
+                var tasks = batchCategories.Select(async sourceCategory =>
                 {
-                    while (await reader.ReadAsync())
+                    var rssXml = await FetchRssContentAsync(sourceCategory.LinkRSS, cancellationToken);
+                    if (rssXml != null)
                     {
-                        sourceCategoriesList.Add(new SourceCategory
-                        {
-                            SourceCategoriesID = reader.GetInt32(0),
-                            LinkRSS = reader.GetString(1)
-                        });
+                        await ParseAndSaveRssAsync(rssXml, sourceCategory.SourceCategoriesID);
                     }
+                });
+
+                await Task.WhenAll(tasks);
+            }
+        }
+
+        private async Task<List<SourceCategory>> GetAllSourceCategoriesAsync(CancellationToken cancellationToken)
+        {
+            var sourceCategories = new List<SourceCategory>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync(cancellationToken);
+                string sql = "SELECT * FROM SourceCategories";
+                var command = new SqlCommand(sql, connection);
+                var reader = await command.ExecuteReaderAsync(cancellationToken);
+
+                while (await reader.ReadAsync(cancellationToken))
+                {
+                    sourceCategories.Add(new SourceCategory
+                    {
+                        SourceCategoriesID = int.Parse(reader["SourceCategoriesID"].ToString()),
+                        SourceID = int.Parse(reader["SourceID"].ToString()),
+                        CategoryID = int.Parse(reader["CategoryID"].ToString()),
+                        LinkRSS = reader["LinkRSS"].ToString(),
+                    });
+                }
+                connection.Close();
+            }
+
+            return sourceCategories;
+        }
+
+        private async Task<XDocument> FetchRssContentAsync(string rssUrl, CancellationToken cancellationToken)
+        {
+            var response = await _httpClient.GetAsync(rssUrl, cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                var rssContent = await response.Content.ReadAsStringAsync();
+                return XDocument.Parse(rssContent);
+            }
+            return null;
+        }
+
+        public async Task ParseAndSaveRssAsync(XDocument rssXml, int categoryId)
+        {
+            var items = rssXml.Descendants("item");
+
+            foreach (var item in items)
+            {
+                var newItem = new News
+                {
+                    Title = GetElementValue(item, "title"),
+                    Link = GetElementValue(item, "link"),
+                    Guid = GetElementValue(item, "guid"),
+                    PubDate = ParseRssDate(GetElementValue(item, "pubDate")),
+                    UpdatedDate = DateTime.Now,
+                    ImageURL = GetImageUrl(item) ?? "Null",
+                    SourceCategoriesID = categoryId,
+                    Description = GetElementValue(item, "description") ?? "Null"
+                };
+
+                Upsert(newItem);
+            }
+        }
+
+        private string GetElementValue(XElement item, string elementName)
+        {
+            return item.Element(elementName)?.Value;
+        }
+
+        private string GetImageUrl(XElement item)
+        {
+            // Kiểm tra xem có thẻ 'enclosure' không
+            var enclosure = item.Element("enclosure")?.Attribute("url")?.Value;
+            if (!string.IsNullOrEmpty(enclosure))
+            {
+                return enclosure;
+            }
+
+            // Nếu không có thẻ 'enclosure', kiểm tra trong 'description'
+            var description = item.Element("description")?.Value;
+            if (!string.IsNullOrEmpty(description))
+            {
+                // Sử dụng Regex để tìm thẻ <img> và lấy giá trị src
+                var match = Regex.Match(description, "<img[^>]+src\\s*=\\s*['\"](?<url>[^'\"]+)['\"][^>]*>");
+                if (match.Success)
+                {
+                    return match.Groups["url"].Value;
                 }
             }
-            return sourceCategoriesList;
+
+            // Nếu không có hình ảnh nào được tìm thấy, trả về null
+            return null;
         }
 
-        public async Task<string> FetchRSSFeedAsync(string rssUrl)
+        public DateTime ParseRssDate(string dateString)
         {
-            //return await _httpClient.GetStringAsync(rssUrl);
-            var request = new HttpRequestMessage(HttpMethod.Get, rssUrl);
-            request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+            // Xử lý chuỗi ngày giờ và các định dạng có thể
+            string[] formats = {
+        "ddd, dd MMM yyyy HH:mm:ss K",         // Định dạng có múi giờ
+        "ddd, dd MMM yyyy HH:mm:ss zzz",       // Định dạng với zzz
+        "ddd, dd MMM yyyy HH:mm:ss",           // Định dạng cơ bản không có múi giờ
+        "ddd, dd MMM yy HH:mm:ss K",           // Định dạng năm 2 chữ số với K
+        "ddd, dd MMM yyyy HH:mm:ss 'GMT'K",    // Định dạng với GMT và K
+        "ddd, dd MMM yyyy HH:mm:ss 'GMT'zzz",  // Định dạng với GMT và zzz
+        "ddd, dd MMM yyyy HH:mm:ss +hh:mm",     // Định dạng với múi giờ
+        "ddd, dd MMM yyyy HH:mm:ss -hh:mm",     // Định dạng với múi giờ âm
+            };
 
-            var response = await _httpClient.SendAsync(request);
+            // Nếu dateString có chứa 'GMT', ta sẽ xóa nó
+            dateString = dateString.Replace("GMT", "").Trim();
 
-            if (!response.IsSuccessStatusCode)
+            // Chuyển đổi cú pháp của múi giờ từ +7 thành +07:00
+            if (dateString.EndsWith("+7"))
             {
-                Console.WriteLine($"Failed to fetch RSS feed from {rssUrl}: {response.StatusCode}");
-                return null;
+                dateString = dateString.Replace("+7", "+07:00");
+            }
+            if (dateString.EndsWith("+07"))
+            {
+                dateString = dateString.Replace("+07", "+07:00");
+            }
+            else if (dateString.EndsWith("+0700"))
+    {
+                dateString = dateString.Replace("+0700", "+07:00");
             }
 
-            //return await response.Content.ReadAsStringAsync();
-            var content = await response.Content.ReadAsStringAsync();
-
-            // Log nội dung RSS nhận được
-            Console.WriteLine($"RSS content from {rssUrl}: {content}");
-
-            return content;
-        }
-
-        public List<News> ProcessRSSData(string rssFeedContent, int sourceCategoriesID)
-        {
-            var newsList = new List<News>();
-            var rssXml = XDocument.Parse(rssFeedContent);
-
-            foreach (var item in rssXml.Descendants("item"))
+            // Phân tích cú pháp ngày giờ
+            if (DateTimeOffset.TryParseExact(dateString, formats, null, System.Globalization.DateTimeStyles.None, out var dateTimeOffset))
             {
+                return dateTimeOffset.UtcDateTime;
+            }
+            throw new FormatException($"Unable to parse date: {dateString}");
+        }
+        public class RssFetchJob : IJob
+        {
+            private readonly NewsRepository _newsRepository;
+
+            public RssFetchJob(NewsRepository newsRepository)
+            {
+                _newsRepository = newsRepository;
+            }
+
+            public async Task Execute(IJobExecutionContext context)
+            {
+                CancellationToken cancellationToken = context.CancellationToken;
                 try
                 {
-                    var pubDateString = item.Element("pubDate")?.Value
-                                 ?? item.Element("{http://purl.org/dc/elements/1.1/}date")?.Value;
-                    DateTime pubDate;
-
-                    // Sử dụng DateTime.ParseExact để xử lý định dạng ngày
-                    string[] formats = { "ddd, dd MMM yyyy HH:mm:ss 'GMT'K", "r", "ddd, dd MMM yyyy HH:mm:ss zzz" };
-                    if (DateTime.TryParseExact(pubDateString, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal, out pubDate))
-                    {
-                        var title = item.Element("title")?.Value;
-                        var description = item.Element("description")?.Value;
-                        var link = item.Element("link")?.Value;
-                        var guid = item.Element("guid")?.Value;
-
-                        //Kiểm tra nếu sử dụng media:content hoặc media: thumbnail cho hình ảnh
-                        var imageUrl = item.Element("enclosure")?.Attribute("url")?.Value
-                                    ?? item.Element("{http://search.yahoo.com/mrss/}thumbnail")?.Attribute("url")?.Value
-                                    ?? item.Element("{http://search.yahoo.com/mrss/}content")?.Attribute("url")?.Value
-                                    ?? item.Element("{http://purl.org/rss/1.0/modules/content/}encoded")?.Value;
-
-
-
-                        var news = new News
-                        {
-                            Title = title,
-                            Description = description,
-                            Link = link,
-                            Guid = guid,
-                            PubDate = pubDate,
-                            ImageURL = imageUrl,
-                            SourceCategoriesID = sourceCategoriesID
-                        };
-                        newsList.Add(news);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Lỗi khi parse pubDate: {pubDateString}");
-                    }
+                    await _newsRepository.FetchAndSaveNewsFromRSSAsync(cancellationToken);
+                    Console.WriteLine("RSS data fetched and saved successfully.");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error processing item: {ex.Message}");
+                    Console.WriteLine($"Error fetching RSS data: {ex.Message}");
                 }
             }
-            return newsList;
         }
-        //------------------------------
-
-
-        //------------------------------
-
-        // Chỉ thêm các news với GUID không trùng lặp
-        public async Task AddUniqueNewsAsync(List<News> newsItems)
+        public class JobSchedule
         {
-            using (var connection = new SqlConnection(_connectionString))
+            public Type JobType { get; }
+            public string CronExpression { get; }
+
+            public JobSchedule(Type jobType, string cronExpression)
             {
-                await connection.OpenAsync();
-
-                foreach (var news in newsItems)
-                {
-                    // Kiểm tra nếu GUID đã tồn tại
-                    string checkGuidQuery = "SELECT COUNT(1) FROM News WHERE Guid = @Guid";
-                    using (var checkCommand = new SqlCommand(checkGuidQuery, connection))
-                    {
-                        checkCommand.Parameters.AddWithValue("@Guid", news.Guid);
-                        var count = (int)await checkCommand.ExecuteScalarAsync();
-
-                        // Nếu GUID không tồn tại, chèn dữ liệu mới
-                        if (count == 0)
-                        {
-                            string insertQuery = @"INSERT INTO News (Title, Description, Link, Guid, PubDate, UpdatedDate, ImageURL, SourceCategoriesID) 
-                                               VALUES (@Title, @Description, @Link, @Guid, @PubDate, @UpdatedDate, @ImageURL, @SourceCategoriesID)";
-                            using (var insertCommand = new SqlCommand(insertQuery, connection))
-                            {
-                                insertCommand.Parameters.AddWithValue("@Title", news.Title);
-                                insertCommand.Parameters.AddWithValue("@Description", news.Description);
-                                insertCommand.Parameters.AddWithValue("@Link", news.Link);
-                                insertCommand.Parameters.AddWithValue("@Guid", news.Guid);
-                                insertCommand.Parameters.AddWithValue("@PubDate", news.PubDate);
-                                insertCommand.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
-                                insertCommand.Parameters.AddWithValue("@ImageURL", (object)news.ImageURL ?? DBNull.Value);
-                                insertCommand.Parameters.AddWithValue("@SourceCategoriesID", news.SourceCategoriesID);
-
-                                await insertCommand.ExecuteNonQueryAsync();
-                            }
-                        }
-                    }
-                }
+                JobType = jobType;
+                CronExpression = cronExpression;
             }
         }
+        public class SingletonJobFactory : IJobFactory
+        {
+            private readonly IServiceProvider _serviceProvider;
+
+            public SingletonJobFactory(IServiceProvider serviceProvider)
+            {
+                _serviceProvider = serviceProvider;
+            }
+
+            public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
+            {
+                return _serviceProvider.GetRequiredService(bundle.JobDetail.JobType) as IJob;
+            }
+
+            public void ReturnJob(IJob job) { }
+        }
+        public class QuartzHostedService : IHostedService
+        {
+            private readonly ISchedulerFactory _schedulerFactory;
+            private readonly IJobFactory _jobFactory;
+            private readonly IEnumerable<JobSchedule> _jobSchedules;
+            private IScheduler _scheduler;
+
+            public QuartzHostedService(
+                ISchedulerFactory schedulerFactory,
+                IJobFactory jobFactory,
+                IEnumerable<JobSchedule> jobSchedules)
+            {
+                _schedulerFactory = schedulerFactory;
+                _jobFactory = jobFactory;
+                _jobSchedules = jobSchedules;
+            }
+
+            public async Task StartAsync(CancellationToken cancellationToken)
+            {
+                _scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
+                _scheduler.JobFactory = _jobFactory;
+
+                foreach (var jobSchedule in _jobSchedules)
+                {
+                    var job = CreateJob(jobSchedule);
+                    var trigger = CreateTrigger(jobSchedule);
+
+                    await _scheduler.ScheduleJob(job, trigger, cancellationToken);
+                }
+
+                await _scheduler.Start(cancellationToken);
+            }
+
+            public async Task StopAsync(CancellationToken cancellationToken)
+            {
+                if (_scheduler != null)
+                {
+                    await _scheduler.Shutdown(cancellationToken);
+                }
+            }
+
+            private static IJobDetail CreateJob(JobSchedule schedule)
+            {
+                var jobType = schedule.JobType;
+                return JobBuilder
+                    .Create(jobType)
+                    .WithIdentity(jobType.FullName)
+                    .WithDescription(jobType.Name)
+                    .Build();
+            }
+
+            private static ITrigger CreateTrigger(JobSchedule schedule)
+            {
+                return TriggerBuilder
+                    .Create()
+                    .WithIdentity($"{schedule.JobType.FullName}.trigger")
+                    .WithCronSchedule(schedule.CronExpression)
+                    .WithDescription(schedule.CronExpression)
+                    .Build();
+            }
+        }
+        
+
 
     }
 }

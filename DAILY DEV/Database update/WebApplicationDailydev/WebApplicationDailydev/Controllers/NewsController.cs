@@ -1,8 +1,4 @@
-﻿using System.Net.Http;
-using System.Xml;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Polly;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApplicationDailydev.Model;
 using WebApplicationDailydev.Repository;
 
@@ -71,31 +67,30 @@ namespace WebApplicationDailydev.Controllers
             _newsRepository.Delete(id);
             return NoContent();
         }
-      
-        [HttpPost("fetch-and-save")]
-        public async Task<IActionResult> FetchAndSaveNews()
+
+     
+
+        // Method to fetch RSS feed from Category and save data Item
+        [HttpGet("fetch-rss")]
+        public async Task<IActionResult> FetchRssFeeds(CancellationToken cancellationToken)
         {
-            // Lấy danh sách LinkRSS và SourceCategoriesID từ bảng SourceCategories
-            var sourceCategoriesList = await _newsRepository.GetAllLinkRSSAndSourceCategoriesAsync();
-
-            foreach (var sourceCategory in sourceCategoriesList)
+            try
             {
-                // Lấy từng LinkRSS và SourceCategoriesID
-                string linkRSS = sourceCategory.LinkRSS;
-                int sourceCategoriesID = sourceCategory.SourceCategoriesID;
-
-                // Gọi repository để fetch RSS feed từ mỗi LinkRSS
-                var rssFeedContent = await _newsRepository.FetchRSSFeedAsync(linkRSS);
-
-                // Xử lý dữ liệu từ RSS feed và lưu vào database
-                var newsItems = _newsRepository.ProcessRSSData(rssFeedContent, sourceCategoriesID);
-
-                // Chỉ thêm các tin tức có GUID không trùng lặp
-                await _newsRepository.AddUniqueNewsAsync(newsItems);
+                await _newsRepository.FetchAndSaveNewsFromRSSAsync(cancellationToken);
+                return Ok("RSS data fetched and saved successfully.");
             }
-
-            return Ok("RSS News fetched and saved successfully.");
+            catch (HttpRequestException e)
+            {
+                return BadRequest($"Error fetching RSS feed: {e.Message}");
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(408, "Request timed out.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while fetching news: " + ex.Message);
+            }
         }
-
     }
 }
