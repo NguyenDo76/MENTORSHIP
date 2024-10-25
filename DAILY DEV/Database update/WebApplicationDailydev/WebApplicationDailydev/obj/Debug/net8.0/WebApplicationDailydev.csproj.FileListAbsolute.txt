@@ -84,3 +84,4 @@ D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicatio
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\Polly.Core.dll
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\System.ServiceModel.Syndication.dll
 D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\Quartz.dll
+D:\GIT MENTORSHIP\DAILY DEV\Database update\WebApplicationDailydev\WebApplicationDailydev\bin\Debug\net8.0\Quartz.Extensions.DependencyInjection.dll

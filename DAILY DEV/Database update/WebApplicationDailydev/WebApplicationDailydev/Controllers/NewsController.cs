@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplicationDailydev.Model;
 using WebApplicationDailydev.Repository;
+using static WebApplicationDailydev.Repository.NewsRepository;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -78,6 +79,7 @@ namespace WebApplicationDailydev.Controllers
             {
                 await _newsRepository.FetchAndSaveNewsFromRSSAsync(cancellationToken);
                 return Ok("RSS data fetched and saved successfully.");
+               ;
             }
             catch (HttpRequestException e)
             {

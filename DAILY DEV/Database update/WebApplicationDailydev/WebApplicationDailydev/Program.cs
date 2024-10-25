@@ -38,6 +38,8 @@
 
 //app.Run();
 
+//=====================================================
+
 using WebApplicationDailydev.Repository;
 using Quartz;
 using Quartz.Impl;
@@ -49,23 +51,37 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 // Add services to the container.
 
-// Add Quartz services
-builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
-builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-builder.Services.AddScoped<RssFetchJob>(); // Đổi sang Scoped
-builder.Services.AddSingleton(new JobSchedule(
-    jobType: typeof(RssFetchJob),
-    cronExpression: "0 0/10 * * * ?")); // Run every 10 minutes
 
-builder.Services.AddHostedService<QuartzHostedService>();
+// Add Quartz services
+//builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
+builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+//builder.Services.AddHostedService<QuartzHostedService>();
+//builder.Services.AddScoped<QuartzHostedService>();
+
+//builder.Services.AddSingleton<JobSchedule>(new JobSchedule(
+//    jobType: typeof(RssFetchJob),
+//    cronExpression: "0 0/5 * * * ?")); // Run every 5 minutes
+
+builder.Services.AddScoped<IJob, RssFetchJob>(); // Đổi sang Scoped
 builder.Services.AddScoped<SourceRepository>();
 builder.Services.AddScoped<CategoriesRepository>();
-builder.Services.AddScoped<NewsRepository>(provider => new NewsRepository(connectionString, provider.GetRequiredService<HttpClient>()));
+builder.Services.AddScoped<NewsRepository>(provider => new NewsRepository(connectionString, provider.GetRequiredService<IHttpClientFactory>()));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();  // Ghi log ra console
+builder.Logging.AddDebug();    // Ghi log vào Debug output
+
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory(); // Sử dụng DI cho Quartz
+});
+
+
 
 var app = builder.Build();
 
@@ -83,3 +99,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

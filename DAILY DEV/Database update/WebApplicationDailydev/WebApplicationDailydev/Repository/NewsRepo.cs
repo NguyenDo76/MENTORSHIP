@@ -10,6 +10,12 @@ using WebApplicationDailydev.Repository;
 using Quartz.Spi;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Net.Http;
+using Microsoft.Extensions.Logging;
+using Quartz.Logging;
+using System;
+using Quartz.Impl;
+using static Quartz.Logging.OperationName;
 
 
 
@@ -191,18 +197,26 @@ namespace WebApplicationDailydev.Repository
         private readonly string _connectionString;
         private readonly HttpClient _httpClient;
 
+        //public NewsRepository(IHttpClientFactory httpClientFactory)
+        //{
+        //    _httpClientFactory = httpClientFactory;
+        //    _httpClient = _httpClientFactory.CreateClient(); // Sử dụng IHttpClientFactory để tạo HttpClient
+        //}
         public NewsRepository(string connectionString, HttpClient httpClient)
         {
             _connectionString = connectionString;
             _httpClient = new HttpClient();
         }
-        //private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        //public NewsRepository(string connectionString, IHttpClientFactory httpClientFactory)
-        //{
-        //    _connectionString = connectionString;
-        //    _httpClientFactory = httpClientFactory;
-        //}
+        public NewsRepository(string connectionString, IHttpClientFactory httpClientFactory)
+        {
+            _connectionString = connectionString;
+            _httpClientFactory = httpClientFactory;
+            _httpClient = _httpClientFactory.CreateClient();
+        }
+        ////Sử dụng _httpClientFactory để tạo HttpClient
+        //var client = _httpClientFactory.CreateClient();
 
         public async Task FetchAndSaveNewsFromRSSAsync(CancellationToken cancellationToken)
         {
@@ -343,130 +357,178 @@ namespace WebApplicationDailydev.Repository
                 dateString = dateString.Replace("+07", "+07:00");
             }
             else if (dateString.EndsWith("+0700"))
-    {
+            {
                 dateString = dateString.Replace("+0700", "+07:00");
             }
 
             // Phân tích cú pháp ngày giờ
             if (DateTimeOffset.TryParseExact(dateString, formats, null, System.Globalization.DateTimeStyles.None, out var dateTimeOffset))
             {
-                return dateTimeOffset.UtcDateTime;
+                return dateTimeOffset.LocalDateTime; //UtcDateTime: Chuyển đổi thời gian về giờ UTC (giờ quốc tế, không có múi giờ).
             }
             throw new FormatException($"Unable to parse date: {dateString}");
         }
+
+        //public class RssFetchJob : IJob
+        //{
+        //    private readonly ILogger<RssFetchJob> _logger;
+        //    private readonly NewsRepository _newsRepository;
+
+        //    public RssFetchJob(NewsRepository newsRepository, ILogger<RssFetchJob> logger)
+        //    {
+        //        _newsRepository = newsRepository;
+        //        _logger = logger;
+        //    }
+
+        //    public async Task Execute(IJobExecutionContext context)
+        //    {
+        //        CancellationToken cancellationToken = context.CancellationToken;
+        //        _logger.LogInformation("RssFetchJob started at {time}", DateTimeOffset.Now); // Thêm log để kiểm tra
+        //        try
+        //        {
+        //            await _newsRepository.FetchAndSaveNewsFromRSSAsync(CancellationToken.None);
+        //            _logger.LogInformation("RSS data fetched and saved successfully.");                   
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            _logger.LogError(ex, "Error fetching RSS data: {Message}", ex.Message); // Thêm log để kiểm tra lỗi
+        //        }
+        //        _logger.LogInformation("RssFetchJob finished at {time}", DateTimeOffset.Now);
+        //    }
+        //}
+        //public class JobSchedule
+        //{
+        //    public Type JobType { get; }
+        //    public string CronExpression { get; }
+
+        //    public JobSchedule(Type jobType, string cronExpression)
+        //    {
+        //        JobType = jobType;
+        //        CronExpression = cronExpression;
+        //    }
+        //}
+        //public class SingletonJobFactory : IJobFactory
+        //{
+        //    private readonly IServiceProvider _serviceProvider;
+
+        //    public SingletonJobFactory(IServiceProvider serviceProvider)
+        //    {
+        //        _serviceProvider = serviceProvider;
+        //    }
+
+        //    public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
+        //    {
+        //        return _serviceProvider.GetRequiredService(bundle.JobDetail.JobType) as IJob;
+        //    }
+
+        //    public void ReturnJob(IJob job) { }
+        //}
+        //public class QuartzHostedService : IHostedService
+        //{
+        //    private readonly ISchedulerFactory _schedulerFactory;
+        //    private readonly IJobFactory _jobFactory;
+        //    private readonly IEnumerable<JobSchedule> _jobSchedules;
+        //    private readonly ILogger<QuartzHostedService> _logger;
+
+        //    private IScheduler _scheduler;
+
+
+        //    public QuartzHostedService(
+        //        ISchedulerFactory schedulerFactory,
+        //        IJobFactory jobFactory,
+        //        IEnumerable<JobSchedule> jobSchedules,
+        //        ILogger<QuartzHostedService> logger
+
+        //        )
+        //    {
+        //        _schedulerFactory = schedulerFactory;
+        //        _jobFactory = jobFactory;
+        //        _jobSchedules = jobSchedules;
+        //        _logger = logger;
+
+        //    }
+
+        //    public async Task StartAsync(CancellationToken cancellationToken)
+        //    {
+        //        _scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
+        //        _scheduler.JobFactory = _jobFactory;
+        //        _logger.LogInformation("QuartzHostedService is starting...");
+
+
+        //        foreach (var jobSchedule in _jobSchedules)
+        //        {
+        //            var job = CreateJob(jobSchedule);
+        //            var trigger = CreateTrigger(jobSchedule);
+
+        //            await _scheduler.ScheduleJob(job, trigger, cancellationToken);// Lịch chạy job
+        //        }
+
+        //        await _scheduler.Start(cancellationToken);// Khởi chạy scheduler
+        //        _logger.LogInformation("QuartzHostedService started.");
+        //    }
+
+        //    public async Task StopAsync(CancellationToken cancellationToken)
+        //    {
+        //        _logger.LogInformation("QuartzHostedService is stopping...");
+        //        if (_scheduler != null)
+        //        {
+        //            await _scheduler.Shutdown(cancellationToken);
+        //        }
+        //        _logger.LogInformation("QuartzHostedService stopped.");
+        //    }
+
+        //    private static IJobDetail CreateJob(JobSchedule schedule)
+        //    {
+        //        var jobType = schedule.JobType;
+        //        return JobBuilder
+        //            .Create(jobType)
+        //            .WithIdentity(jobType.FullName)
+        //            .WithDescription(jobType.Name)
+        //            .Build();
+        //    }
+
+        //    private static ITrigger CreateTrigger(JobSchedule schedule)
+        //    {
+        //        return TriggerBuilder
+        //            .Create()
+        //            .WithIdentity($"{schedule.JobType.FullName}.trigger")
+        //            .WithCronSchedule(schedule.CronExpression)
+        //            .WithDescription(schedule.CronExpression)
+        //            .Build();
+        //    }
+        //}
+
+
+
+
         public class RssFetchJob : IJob
         {
+           
             private readonly NewsRepository _newsRepository;
 
-            public RssFetchJob(NewsRepository newsRepository)
-            {
-                _newsRepository = newsRepository;
-            }
+            IJobDetail job = JobBuilder.Create<NewsRepository>()
+                                       //.WithIdentity("myJob", "group1")
+                                       .Build();
+
+            ITrigger trigger = TriggerBuilder.Create()
+                                             //.WithIdentity("myTrigger", "group1")
+                                             .StartNow()
+                                             .WithSimpleSchedule(x => x
+                                             .WithIntervalInMinutes(5)
+                                             .RepeatForever())
+                                             .Build();
 
             public async Task Execute(IJobExecutionContext context)
             {
-                CancellationToken cancellationToken = context.CancellationToken;
-                try
-                {
-                    await _newsRepository.FetchAndSaveNewsFromRSSAsync(cancellationToken);
-                    Console.WriteLine("RSS data fetched and saved successfully.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error fetching RSS data: {ex.Message}");
-                }
-            }
-        }
-        public class JobSchedule
-        {
-            public Type JobType { get; }
-            public string CronExpression { get; }
-
-            public JobSchedule(Type jobType, string cronExpression)
-            {
-                JobType = jobType;
-                CronExpression = cronExpression;
-            }
-        }
-        public class SingletonJobFactory : IJobFactory
-        {
-            private readonly IServiceProvider _serviceProvider;
-
-            public SingletonJobFactory(IServiceProvider serviceProvider)
-            {
-                _serviceProvider = serviceProvider;
+                await Console.Out.WriteLineAsync("RssFetchJob is executing.");
             }
 
-            public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
-            {
-                return _serviceProvider.GetRequiredService(bundle.JobDetail.JobType) as IJob;
-            }
+            var schedulerFactory = builder.Services.GetRequiredService<ISchedulerFactory>();
 
-            public void ReturnJob(IJob job) { }
-        }
-        public class QuartzHostedService : IHostedService
-        {
-            private readonly ISchedulerFactory _schedulerFactory;
-            private readonly IJobFactory _jobFactory;
-            private readonly IEnumerable<JobSchedule> _jobSchedules;
-            private IScheduler _scheduler;
+            sched = scheduleFactory.GetScheduler();
 
-            public QuartzHostedService(
-                ISchedulerFactory schedulerFactory,
-                IJobFactory jobFactory,
-                IEnumerable<JobSchedule> jobSchedules)
-            {
-                _schedulerFactory = schedulerFactory;
-                _jobFactory = jobFactory;
-                _jobSchedules = jobSchedules;
-            }
-
-            public async Task StartAsync(CancellationToken cancellationToken)
-            {
-                _scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
-                _scheduler.JobFactory = _jobFactory;
-
-                foreach (var jobSchedule in _jobSchedules)
-                {
-                    var job = CreateJob(jobSchedule);
-                    var trigger = CreateTrigger(jobSchedule);
-
-                    await _scheduler.ScheduleJob(job, trigger, cancellationToken);
-                }
-
-                await _scheduler.Start(cancellationToken);
-            }
-
-            public async Task StopAsync(CancellationToken cancellationToken)
-            {
-                if (_scheduler != null)
-                {
-                    await _scheduler.Shutdown(cancellationToken);
-                }
-            }
-
-            private static IJobDetail CreateJob(JobSchedule schedule)
-            {
-                var jobType = schedule.JobType;
-                return JobBuilder
-                    .Create(jobType)
-                    .WithIdentity(jobType.FullName)
-                    .WithDescription(jobType.Name)
-                    .Build();
-            }
-
-            private static ITrigger CreateTrigger(JobSchedule schedule)
-            {
-                return TriggerBuilder
-                    .Create()
-                    .WithIdentity($"{schedule.JobType.FullName}.trigger")
-                    .WithCronSchedule(schedule.CronExpression)
-                    .WithDescription(schedule.CronExpression)
-                    .Build();
-            }
-        }
-        
-
-
+            // Tell Quartz to schedule the job using our trigger
+            await sched.ScheduleJob(job, trigger);
+        }           
     }
 }
